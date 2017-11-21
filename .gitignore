@@ -2,3 +2,4 @@ lib/
 nbproject/
 src/conf/MANIFEST.MF
 build.xml
+build/
