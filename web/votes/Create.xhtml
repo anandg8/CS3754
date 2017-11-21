@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VotesCreateDlg" widgetVar="VotesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateVotesTitle}">
+            <h:form id="VotesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{votesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateVotesLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{votesController.selected.id}" title="#{bundle.CreateVotesTitle_id}" required="true" requiredMessage="#{bundle.CreateVotesRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateVotesLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{votesController.selected.userId}" title="#{bundle.CreateVotesTitle_userId}" required="true" requiredMessage="#{bundle.CreateVotesRequiredMessage_userId}"/>
+                        <p:outputLabel value="#{bundle.CreateVotesLabel_action}" for="action" />
+                        <p:inputText id="action" value="#{votesController.selected.action}" title="#{bundle.CreateVotesTitle_action}" required="true" requiredMessage="#{bundle.CreateVotesRequiredMessage_action}"/>
+                        <p:outputLabel value="#{bundle.CreateVotesLabel_comments}" for="comments" />
+                        <p:selectOneMenu id="comments" value="#{votesController.selected.comments}" >
+                            <f:selectItems value="#{commentsController.itemsAvailableSelectOne}"
+                                           var="commentsItem"
+                                           itemValue="#{commentsItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateVotesLabel_commentsId}" for="commentsId" />
+                        <p:selectOneMenu id="commentsId" value="#{votesController.selected.commentsId}" required="true" requiredMessage="#{bundle.EditVotesRequiredMessage_commentsId}">
+                            <f:selectItems value="#{commentsController.itemsAvailableSelectOne}"
+                                           var="commentsIdItem"
+                                           itemValue="#{commentsIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateVotesLabel_dishId}" for="dishId" />
+                        <p:selectOneMenu id="dishId" value="#{votesController.selected.dishId}" required="true" requiredMessage="#{bundle.EditVotesRequiredMessage_dishId}">
+                            <f:selectItems value="#{dishController.itemsAvailableSelectOne}"
+                                           var="dishIdItem"
+                                           itemValue="#{dishIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{votesController.create}" value="#{bundle.Save}" update="display,:VotesListForm:datalist,:growl" oncomplete="handleSubmit(args,'VotesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VotesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
