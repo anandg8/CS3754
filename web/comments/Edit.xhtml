@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CommentsEditDlg" widgetVar="CommentsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCommentsTitle}">
+            <h:form id="CommentsEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{commentsController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{commentsController.selected.id}" title="#{bundle.EditCommentsTitle_id}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_replyId}" for="replyId" />
+                        <p:inputText id="replyId" value="#{commentsController.selected.replyId}" title="#{bundle.EditCommentsTitle_replyId}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_replyId}"/>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_datePosted}" for="datePosted" />
+                        <p:calendar id="datePosted" pattern="MM/dd/yyyy HH:mm:ss" value="#{commentsController.selected.datePosted}" title="#{bundle.EditCommentsTitle_datePosted}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_datePosted}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_isVisible}" for="isVisible" />
+                        <p:inputText id="isVisible" value="#{commentsController.selected.isVisible}" title="#{bundle.EditCommentsTitle_isVisible}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_isVisible}"/>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_comment}" for="comment" />
+                        <p:inputText id="comment" value="#{commentsController.selected.comment}" title="#{bundle.EditCommentsTitle_comment}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_comment}"/>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_voteId}" for="voteId" />
+                        <p:selectOneMenu id="voteId" value="#{commentsController.selected.voteId}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_voteId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{votesController.itemsAvailableSelectOne}"
+                                           var="voteIdItem"
+                                           itemValue="#{voteIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{commentsController.selected.userId}" required="true" requiredMessage="#{bundle.EditCommentsRequiredMessage_userId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_dish}" for="dish" />
+                        <p:selectOneMenu id="dish" value="#{commentsController.selected.dish}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{dishController.itemsAvailableSelectOne}"
+                                           var="dishItem"
+                                           itemValue="#{dishItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCommentsLabel_votes}" for="votes" />
+                        <p:selectOneMenu id="votes" value="#{commentsController.selected.votes}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{votesController.itemsAvailableSelectOne}"
+                                           var="votesItem"
+                                           itemValue="#{votesItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{commentsController.update}" value="#{bundle.Save}" update="display,:CommentsListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CommentsEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CommentsEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
