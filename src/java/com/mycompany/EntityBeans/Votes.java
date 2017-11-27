@@ -6,7 +6,6 @@ package com.mycompany.EntityBeans;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Votes.findAll", query = "SELECT v FROM Votes v")
     , @NamedQuery(name = "Votes.findById", query = "SELECT v FROM Votes v WHERE v.id = :id")
     , @NamedQuery(name = "Votes.findByUserId", query = "SELECT v FROM Votes v WHERE v.userId = :userId")
-    , @NamedQuery(name = "Votes.findByAction", query = "SELECT v FROM Votes v WHERE v.action = :action")})
+    , @NamedQuery(name = "Votes.findByAction", query = "SELECT v FROM Votes v WHERE v.action = :action")
+    , @NamedQuery(name = "Votes.findByCommentsId", query = "SELECT v FROM Votes v WHERE v.commentsId = :commentsId")})
 public class Votes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +48,10 @@ public class Votes implements Serializable {
     @NotNull
     @Column(name = "action")
     private int action;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "voteId")
-    private Comments comments;
-    @JoinColumn(name = "comments_id", referencedColumnName = "id")
-    @OneToOne(optional = false)
-    private Comments commentsId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "comments_id")
+    private int commentsId;
     @JoinColumn(name = "dish_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Dish dishId;
@@ -65,10 +63,11 @@ public class Votes implements Serializable {
         this.id = id;
     }
 
-    public Votes(Integer id, int userId, int action) {
+    public Votes(Integer id, int userId, int action, int commentsId) {
         this.id = id;
         this.userId = userId;
         this.action = action;
+        this.commentsId = commentsId;
     }
 
     public Integer getId() {
@@ -95,19 +94,11 @@ public class Votes implements Serializable {
         this.action = action;
     }
 
-    public Comments getComments() {
-        return comments;
-    }
-
-    public void setComments(Comments comments) {
-        this.comments = comments;
-    }
-
-    public Comments getCommentsId() {
+    public int getCommentsId() {
         return commentsId;
     }
 
-    public void setCommentsId(Comments commentsId) {
+    public void setCommentsId(int commentsId) {
         this.commentsId = commentsId;
     }
 

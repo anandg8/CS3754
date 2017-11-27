@@ -1,6 +1,6 @@
 package com.mycompany.controllers;
 
-import com.mycompany.EntityBeans.CuisineTable;
+import com.mycompany.EntityBeans.CuisineType;
 import com.mycompany.controllers.util.JsfUtil;
 import com.mycompany.controllers.util.JsfUtil.PersistAction;
 import com.mycompany.FacadeBeans.CuisineTableFacade;
@@ -25,17 +25,17 @@ public class CuisineTableController implements Serializable {
 
     @EJB
     private com.mycompany.FacadeBeans.CuisineTableFacade ejbFacade;
-    private List<CuisineTable> items = null;
-    private CuisineTable selected;
+    private List<CuisineType> items = null;
+    private CuisineType selected;
 
     public CuisineTableController() {
     }
 
-    public CuisineTable getSelected() {
+    public CuisineType getSelected() {
         return selected;
     }
 
-    public void setSelected(CuisineTable selected) {
+    public void setSelected(CuisineType selected) {
         this.selected = selected;
     }
 
@@ -49,8 +49,8 @@ public class CuisineTableController implements Serializable {
         return ejbFacade;
     }
 
-    public CuisineTable prepareCreate() {
-        selected = new CuisineTable();
+    public CuisineType prepareCreate() {
+        selected = new CuisineType();
         initializeEmbeddableKey();
         return selected;
     }
@@ -74,7 +74,7 @@ public class CuisineTableController implements Serializable {
         }
     }
 
-    public List<CuisineTable> getItems() {
+    public List<CuisineType> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,19 +109,19 @@ public class CuisineTableController implements Serializable {
         }
     }
 
-    public CuisineTable getCuisineTable(java.lang.Integer id) {
+    public CuisineType getCuisineTable(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<CuisineTable> getItemsAvailableSelectMany() {
+    public List<CuisineType> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<CuisineTable> getItemsAvailableSelectOne() {
+    public List<CuisineType> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = CuisineTable.class)
+    @FacesConverter(forClass = CuisineType.class)
     public static class CuisineTableControllerConverter implements Converter {
 
         @Override
@@ -151,11 +151,11 @@ public class CuisineTableController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof CuisineTable) {
-                CuisineTable o = (CuisineTable) object;
+            if (object instanceof CuisineType) {
+                CuisineType o = (CuisineType) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CuisineTable.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CuisineType.class.getName()});
                 return null;
             }
         }

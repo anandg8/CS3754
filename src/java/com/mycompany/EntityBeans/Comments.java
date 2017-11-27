@@ -7,7 +7,6 @@ package com.mycompany.EntityBeans;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Comments.findByReplyId", query = "SELECT c FROM Comments c WHERE c.replyId = :replyId")
     , @NamedQuery(name = "Comments.findByDatePosted", query = "SELECT c FROM Comments c WHERE c.datePosted = :datePosted")
     , @NamedQuery(name = "Comments.findByIsVisible", query = "SELECT c FROM Comments c WHERE c.isVisible = :isVisible")
+    , @NamedQuery(name = "Comments.findByVoteId", query = "SELECT c FROM Comments c WHERE c.voteId = :voteId")
     , @NamedQuery(name = "Comments.findByComment", query = "SELECT c FROM Comments c WHERE c.comment = :comment")})
 public class Comments implements Serializable {
 
@@ -62,19 +61,19 @@ public class Comments implements Serializable {
     private int isVisible;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "vote_id")
+    private int voteId;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "comment")
     private String comment;
-    @JoinColumn(name = "vote_id", referencedColumnName = "id")
-    @OneToOne(optional = false)
-    private Votes voteId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commentsId")
-    private Dish dish;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "commentsId")
-    private Votes votes;
+    @JoinColumn(name = "comment_table_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CommentsConjunction commentTableId;
 
     public Comments() {
     }
@@ -83,11 +82,12 @@ public class Comments implements Serializable {
         this.id = id;
     }
 
-    public Comments(Integer id, int replyId, Date datePosted, int isVisible, String comment) {
+    public Comments(Integer id, int replyId, Date datePosted, int isVisible, int voteId, String comment) {
         this.id = id;
         this.replyId = replyId;
         this.datePosted = datePosted;
         this.isVisible = isVisible;
+        this.voteId = voteId;
         this.comment = comment;
     }
 
@@ -123,20 +123,20 @@ public class Comments implements Serializable {
         this.isVisible = isVisible;
     }
 
+    public int getVoteId() {
+        return voteId;
+    }
+
+    public void setVoteId(int voteId) {
+        this.voteId = voteId;
+    }
+
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Votes getVoteId() {
-        return voteId;
-    }
-
-    public void setVoteId(Votes voteId) {
-        this.voteId = voteId;
     }
 
     public User getUserId() {
@@ -147,20 +147,12 @@ public class Comments implements Serializable {
         this.userId = userId;
     }
 
-    public Dish getDish() {
-        return dish;
+    public CommentsConjunction getCommentTableId() {
+        return commentTableId;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
-    }
-
-    public Votes getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Votes votes) {
-        this.votes = votes;
+    public void setCommentTableId(CommentsConjunction commentTableId) {
+        this.commentTableId = commentTableId;
     }
 
     @Override

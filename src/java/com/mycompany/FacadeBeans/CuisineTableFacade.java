@@ -4,7 +4,7 @@
  */
 package com.mycompany.FacadeBeans;
 
-import com.mycompany.EntityBeans.CuisineTable;
+import com.mycompany.EntityBeans.CuisineType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author amitd
  */
 @Stateless
-public class CuisineTableFacade extends AbstractFacade<CuisineTable> {
+public class CuisineTableFacade extends AbstractFacade<CuisineType> {
 
     @PersistenceContext(unitName = "CookToSharePU")
     private EntityManager em;
@@ -25,7 +25,7 @@ public class CuisineTableFacade extends AbstractFacade<CuisineTable> {
     }
 
     public CuisineTableFacade() {
-        super(CuisineTable.class);
+        super(CuisineType.class);
     }
     
 }

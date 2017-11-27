@@ -6,14 +6,13 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-
-
+    <ui:composition template="/siteTemplate.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ListDishTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="editableContent">
+            <p:growl id="growl" life="5000" />
             <h:form id="DishListForm">
                 <p:panel header="#{bundle.ListDishTitle}">
                     <p:dataTable id="datalist" value="#{dishController.items}" var="item"
@@ -27,17 +26,37 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="width: 150px">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDishTitle_id}"/>
+                                <h:outputText value="Picture"/>
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <div align="center" >
+                                <img src="#{item.dishPicturePath}" width="100px" height="100px" />
+                            </div>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDishTitle_description}"/>
                             </f:facet>
                             <h:outputText value="#{item.description}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Cusine"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuisineId.name}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Cook User ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userId.username}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDishTitle_cost}"/>
+                            </f:facet>
+                            <h:outputText value="$#{item.cost}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -54,36 +73,6 @@
                             <h:outputText value="#{item.mealTime}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDishTitle_cost}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cost}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDishTitle_numGuests}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numGuests}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDishTitle_commentsId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.commentsId}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDishTitle_cuisineId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cuisineId}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDishTitle_userId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.userId}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{dishController.prepareCreate}" update=":DishCreateForm" oncomplete="PF('DishCreateDialog').show()"/>

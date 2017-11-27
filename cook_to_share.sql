@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2017 at 09:20 PM
+-- Generation Time: Nov 27, 2017 at 12:13 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -87,6 +87,7 @@ CREATE TABLE `dish` (
   `cuisine_id` int(11) NOT NULL COMMENT 'cuisine_id Foreign Key',
   `dish_name` varchar(15) NOT NULL,
   `description` text NOT NULL COMMENT 'description of dish',
+  `dish_picture_path` varchar(200) NOT NULL,
   `reservation_time` datetime NOT NULL COMMENT 'reservation time',
   `meal_time` datetime NOT NULL COMMENT 'meal time, != reservation time',
   `cost` double UNSIGNED NOT NULL COMMENT 'Cost of meal represented as: XX.XX',
@@ -98,8 +99,8 @@ CREATE TABLE `dish` (
 -- Dumping data for table `dish`
 --
 
-INSERT INTO `dish` (`id`, `user_id`, `cuisine_id`, `dish_name`, `description`, `reservation_time`, `meal_time`, `cost`, `num_guests`, `comments_id`) VALUES
-(1, 1, 1, 'General Tso', 'Chicken Dish\r\nVery Healthy', '2017-11-28 15:00:00', '2017-11-28 18:00:00', 5.5, 5, 1);
+INSERT INTO `dish` (`id`, `user_id`, `cuisine_id`, `dish_name`, `description`, `dish_picture_path`, `reservation_time`, `meal_time`, `cost`, `num_guests`, `comments_id`) VALUES
+(1, 1, 1, 'General Tso', 'Chicken Dish\r\nVery Healthy', 'http://www.seriouseats.com/recipes/assets_c/2015/04/20140328-general-tsos-chicken-recipe-food-lab-1-thumb-1500xauto-422309.jpg', '2017-11-28 15:00:00', '2017-11-28 18:00:00', 5.5, 5, 1);
 
 -- --------------------------------------------------------
 
