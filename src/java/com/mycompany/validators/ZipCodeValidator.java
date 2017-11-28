@@ -31,7 +31,7 @@ public class ZipCodeValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
         // Type cast the inputted "value" to zipcode of type String
-        String zipcode = (String) value;
+        String zipcode = String.valueOf(value);
 
         if (zipcode == null || zipcode.isEmpty()) {
             // Do not take any action. 

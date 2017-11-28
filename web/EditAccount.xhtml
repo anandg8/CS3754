@@ -52,9 +52,9 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                         </p:inputText>
 
                         <!-- ADDRESS LINE 1 -->
-                        <p:outputLabel value="#{bundle.EditUserLabel_address1}" for="address1" />
-                        <p:inputText id="address1" value="#{accountManager.selected.address1}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_address1}" label="Address Line 1">
+                        <p:outputLabel value="#{bundle.EditUserLabel_address1}" for="address" />
+                        <p:inputText id="address" value="#{accountManager.selected.address}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditUserRequiredMessage_address1}" label="Address Line">
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
