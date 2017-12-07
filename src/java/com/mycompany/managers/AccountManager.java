@@ -20,6 +20,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 import java.util.Date;
+import java.net.*;
+import java.io.*;
+import org.primefaces.json.JSONObject;
 
 /*
 ---------------------------------------------------------------------------
@@ -415,7 +418,29 @@ public class AccountManager implements Serializable {
                 newUser.setDateCreated(currentDate);
                 newUser.setIsActive(1);
                 newUser.setProfilePicture("Temp Profile Pic");
-                newUser.setLocation("Blacksburg");
+                String fullAddress = address + "+" + city + "+" + state + "+" + zipcode;
+                //System.out.println("address: " + fullAddress);
+                try {
+                    //System.out.println("attempting to geocode address");
+                    URL googleGeocodeAPI = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(fullAddress, "UTF-8"));
+                    URLConnection con = googleGeocodeAPI.openConnection();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String input;
+                    String jsonObj = "";
+                    while ((input = in.readLine()) != null) {
+                        jsonObj += input;
+                    }
+                    in.close();
+                    JSONObject json = new JSONObject(jsonObj);
+                    JSONObject geo = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                    double lat = (double)geo.get("lat");
+                    double lng = (double)geo.get("lng");
+                    newUser.setLocation(lat + "," + lng);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    newUser.setLocation("Blacksburg");
+                }
+                
                 newUser.setUserRating(5.0);
                 
                 getUserFacade().create(newUser);

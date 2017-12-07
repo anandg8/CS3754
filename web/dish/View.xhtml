@@ -8,35 +8,28 @@
 
     <ui:composition>
 
-        <p:dialog id="DishViewDlg" widgetVar="DishViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}">
+        <p:dialog id="DishViewDlg" widgetVar="DishViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}" >
             <h:form id="DishViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{dishController.selected != null}">
-                        <h:outputText value="#{bundle.ViewDishLabel_id}"/>
-                        <h:outputText value="#{dishController.selected.id}" title="#{bundle.ViewDishTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewDishLabel_description}"/>
-                        <h:outputText value="#{dishController.selected.description}" title="#{bundle.ViewDishTitle_description}"/>
-                        <h:outputText value="#{bundle.ViewDishLabel_reservationTime}"/>
-                        <h:outputText value="#{dishController.selected.reservationTime}" title="#{bundle.ViewDishTitle_reservationTime}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                        <h:outputText value="#{bundle.ViewDishLabel_mealTime}"/>
-                        <h:outputText value="#{dishController.selected.mealTime}" title="#{bundle.ViewDishTitle_mealTime}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-                        <h:outputText value="#{bundle.ViewDishLabel_cost}"/>
-                        <h:outputText value="#{dishController.selected.cost}" title="#{bundle.ViewDishTitle_cost}"/>
-                        <h:outputText value="#{bundle.ViewDishLabel_numGuests}"/>
-                        <h:outputText value="#{dishController.selected.numGuests}" title="#{bundle.ViewDishTitle_numGuests}"/>
-                        <h:outputText value="#{bundle.ViewDishLabel_commentsId}"/>
-                        <h:outputText value="#{dishController.selected.commentsId}" title="#{bundle.ViewDishTitle_commentsId}"/>
-                        <h:outputText value="#{bundle.ViewDishLabel_cuisineId}"/>
-                        <h:outputText value="#{dishController.selected.cuisineId}" title="#{bundle.ViewDishTitle_cuisineId}"/>
-                        <h:outputText value="#{bundle.ViewDishLabel_userId}"/>
-                        <h:outputText value="#{dishController.selected.userId}" title="#{bundle.ViewDishTitle_userId}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="DishViewDialog.hide()"/>
-                </h:panelGroup>
+                <br />
+                <div align="right">
+                    <h:link outcome="/dish/Report" styleClass="arialTen">
+                                <i class="fa fa-exclamation-triangle">&nbsp;</i>
+                    </h:link>&nbsp;&nbsp;
+                    <br />
+                    <br />
+                </div>
+                <div align="center">
+                    <h:panelGroup id="display">
+                        <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
+                        <br />
+                         <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+                            <h:outputText value="Cost:"/>
+                            <h:outputText value="#{dishController.selected.cost}" />
+                            
+                            
+                         </p:panelGrid>
+                    </h:panelGroup>
+                </div>
             </h:form>
         </p:dialog>
 
