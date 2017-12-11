@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
@@ -22,9 +23,16 @@
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
-
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <c:if test="#{accountManager.isLoggedIn() == true}"> 
+                            
+                            <p:ajax event="rowSelect"   update="createButton viewButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton"/>
+                        </c:if>
+                        <c:otherwise>
+                                <p:ajax event="rowSelect"   update="viewButton"/>
+                                <p:ajax event="rowUnselect" update="viewButton"/>
+                        </c:otherwise>
+                        
 
                         <p:column style="width: 150px">
                             <f:facet name="header">
@@ -75,10 +83,10 @@
                             </h:outputText>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{dishController.prepareCreate}" update=":DishCreateForm" oncomplete="PF('DishCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialog').show()" disabled="#{empty dishController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DishEditForm" oncomplete="PF('DishEditDialog').show()" disabled="#{empty dishController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{dishController.destroy}" update=":growl,datalist" disabled="#{empty dishController.selected}"/>
+                            <c:if test="#{accountManager.isLoggedIn() == true}">  
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{dishController.prepareCreate}" update=":DishCreateForm" oncomplete="PF('DishCreateDialog').show()"/>
+                            </c:if>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

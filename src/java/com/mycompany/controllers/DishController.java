@@ -4,6 +4,7 @@ import com.mycompany.EntityBeans.Dish;
 import com.mycompany.controllers.util.JsfUtil;
 import com.mycompany.controllers.util.JsfUtil.PersistAction;
 import com.mycompany.FacadeBeans.DishFacade;
+import com.mycompany.managers.AccountManager;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("dishController")
 @SessionScoped
@@ -28,6 +30,9 @@ public class DishController implements Serializable {
     private List<Dish> items = null;
     private Dish selected;
 
+    @Inject
+    AccountManager accountManager;
+    
     public DishController() {
     }
 
@@ -56,6 +61,7 @@ public class DishController implements Serializable {
     }
 
     public void create() {
+        selected.setUserId(accountManager.getSelected());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DishCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -86,7 +92,11 @@ public class DishController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
+                    if (persistAction == PersistAction.CREATE) {
+                     getFacade().createDish(selected);
+                    } else {
+                        getFacade().edit(selected);
+                    }
                 } else {
                     getFacade().remove(selected);
                 }
@@ -160,6 +170,26 @@ public class DishController implements Serializable {
             }
         }
 
+    }
+    
+    public String generateTable() {
+        String html = "<main><table><thead><tr><th>Picture</th><th>Description</th><th>Cuisine</th><th>Cook</th><th>Cost</th><th>Reservation Time</th><th>Meal Time</th></tr></thead><tbody>";
+        for (Dish d : getItems()) {
+           html += "<tr>";
+           html += "<td data-title='Picture'>";
+           html += "<img src='" + d.getDishPicturePath() + "' style='width:300px'/></td>";
+           html += "<td data-title='Description'>" + d.getDescription() + "</td>";
+           html += "<td data-title='Cuisine'>" + d.getCuisineId().getName() + "</td>";
+           html += "<td data-title='Cook'>" + d.getUserId().getUsername() + "</td>";
+           html += "<td data-title='Cost'>" + d.getCost() + "</td>";
+           html += "<td data-title='Reservation Time'>" + d.getReservationTime() + "</td>";
+           html += "<td data-title='Meal Time'>" + d.getMealTime() + "</td>";
+           html += "<td class='select'><a class='button' href='#'>Select</a></td>";
+           html += "</tr>";
+        }
+        html += "</tbody></table>";
+        
+        return html;
     }
 
 }
