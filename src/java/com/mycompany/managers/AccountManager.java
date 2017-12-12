@@ -5,11 +5,14 @@
 package com.mycompany.managers;
 
 import com.mycompany.EntityBeans.User;
+import com.mycompany.EntityBeans.UserPhoto;
 
 import com.mycompany.FacadeBeans.UserFacade;
+import com.mycompany.FacadeBeans.UserPhotoFacade;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -115,6 +118,9 @@ public class AccountManager implements Serializable {
      */
     @EJB
     private UserFacade userFacade;
+    
+    @EJB
+    private UserPhotoFacade userPhotoFacade;
 
     // Constructor method instantiating an instance of AccountManager
     public AccountManager() {
@@ -287,6 +293,10 @@ public class AccountManager implements Serializable {
 
     public UserFacade getUserFacade() {
         return userFacade;
+    }
+    
+    public UserPhotoFacade getUserPhotoFacade() {
+        return userPhotoFacade;
     }
 
     /*
@@ -800,6 +810,51 @@ public class AccountManager implements Serializable {
 
         // Redirect to show the index (Home) page
         return "index.xhtml?faces-redirect=true";
+    }
+    public String userPhoto() {
+
+        // Obtain the signed-in user's username
+        String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        // Obtain the object reference of the signed-in user
+        User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
+
+        // Obtain the id (primary key in the database) of the signedInUser object
+        Integer userId = signedInUser.getId();
+
+        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
+
+        if (photoList.isEmpty()) {
+            /*
+            No user photo exists. Return defaultUserPhoto.png 
+            in CloudStorage/PhotoStorage.
+             */
+            return Constants.DEFAULT_PHOTO_RELATIVE_PATH;
+        }
+
+        /*
+        photoList.get(0) returns the object reference of the first Photo object in the list.
+        getThumbnailFileName() message is sent to that Photo object to retrieve its
+        thumbnail image file name, e.g., 5_thumbnail.jpeg
+         */
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        /*
+        In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
+        Alternate Document Root with the following statement:
+        
+        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Users/Balci" />
+        
+        in Constants.java file, we defined the relative photo file path as
+        
+        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+        
+        Thus, JSF knows that 'CloudStorage/' is the document root directory.
+         */
+        String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
+
+        return relativePhotoFilePath;
     }
 
 }
