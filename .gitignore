@@ -3,3 +3,8 @@ nbproject/
 src/conf/MANIFEST.MF
 build.xml
 build/
+persistence.xml
+faces-config.xml
+glassfish-resources.xml
+web.xml
+dist/
