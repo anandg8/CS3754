@@ -5,9 +5,12 @@
 package com.mycompany.FacadeBeans;
 
 import com.mycompany.EntityBeans.User;
+import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -65,6 +68,30 @@ public class UserFacade extends AbstractFacade<User> {
         
         // The remove method is inherited from the parent AbstractFacade class
         em.remove(user); 
+    }
+
+    public int getCredits(int id) {
+        Query q = em.createNativeQuery("SELECT credits_available FROM user_credits WHERE user_id = ?");
+        q.setParameter(1, "" + id);
+        Integer d = (Integer) q.getSingleResult();
+        return d.intValue();
+
+    }
+
+    public void createCreditAccount(Integer id) {
+        em.createNativeQuery("INSERT INTO user_credits VALUES(DEFAULT, ?, 0)").setParameter(1, id).executeUpdate();
+    }
+
+    public void setCredits(int credit, int userid) {
+        em.createNativeQuery("UPDATE user_credits SET credits_available = ? WHERE user_id = ?").setParameter(1, credit).setParameter(2, userid).executeUpdate();
+    }
+
+    public void creditAccount(int userid, int addition) {
+        setCredits(getCredits(userid) + addition, userid);
+    }
+
+    public void withdrawAccount(int from, int cost) {
+        setCredits(getCredits(from) - cost, from);
     }
     
 }

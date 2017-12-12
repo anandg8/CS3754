@@ -454,7 +454,7 @@ public class AccountManager implements Serializable {
                 }
                 
                 newUser.setUserRating(5.0);
-                
+                getUserFacade().createCreditAccount(newUser.getId());
                 getUserFacade().create(newUser);
 
             } catch (EJBException e) {
@@ -578,6 +578,14 @@ public class AccountManager implements Serializable {
             return "index.xhtml?faces-redirect=true";
         }
         return "";
+    }
+    
+    public int getNumberOfCreditsAvailable() {
+        if (selected != null && selected.getId() != null) {
+            return getUserFacade().getCredits(selected.getId());
+        } else {
+            return 0;
+        }
     }
     
     /*
@@ -897,6 +905,15 @@ public class AccountManager implements Serializable {
         String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
 
         return relativePhotoFilePath;
+    }
+
+    /*
+        from user_id --> to user_id
+        from - credit -- to + credit
+    */
+    public void creditTransferFromTo(Integer from, Integer to, int cost) {
+        getUserFacade().withdrawAccount(from, cost);
+        getUserFacade().creditAccount(to, cost);
     }
 
 }
