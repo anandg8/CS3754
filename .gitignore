@@ -8,3 +8,4 @@ faces-config.xml
 glassfish-resources.xml
 web.xml
 dist/
+Constants.java
