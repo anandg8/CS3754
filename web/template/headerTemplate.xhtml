@@ -85,6 +85,12 @@ Copyright © 2017 Anand Guruswamy. All rights reserved.
                             </h:link>&nbsp;&nbsp;
                         </c:if>
                         
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
+                            <h:link outcome="FoodMap" styleClass="arialTen">
+                                <i class="fa fa-map">&nbsp;</i>Food Map
+                            </h:link>&nbsp;&nbsp;
+                        </c:if>
                         <!-- Clicking "Dishes" displays the index.xhtml file -->
                         <h:link outcome="/dish/List" styleClass="arialTen">
                             <i class="fa fa-cutlery">&nbsp;</i>Dishes
