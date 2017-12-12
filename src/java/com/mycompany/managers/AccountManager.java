@@ -797,9 +797,8 @@ public class AccountManager implements Serializable {
 
         // Invalidate the logged-in User's session
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-
         // Redirect to show the index (Home) page
-        return "index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
 
 }

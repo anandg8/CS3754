@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
@@ -12,22 +13,42 @@
             <h:form id="DishViewForm">
                 <br />
                 <div align="right">
-                    <h:link outcome="/dish/Report" styleClass="arialTen">
+<!--                    <h:link outcome="/dish/Report" styleClass="arialTen">
                                 <i class="fa fa-exclamation-triangle">&nbsp;</i>
-                    </h:link>&nbsp;&nbsp;
+                    </h:link>&nbsp;&nbsp;-->
                     <br />
                     <br />
                 </div>
                 <div align="center">
-                    <h:panelGroup id="display">
+                    <h:panelGroup id="display" rendered="#{dishController.selected != null}">
                         <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
                         <br />
+                        <br />
+                        <p:rating value='#{dishController.selected.userId.userRating}' stars="5" readonly="true" />
                          <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
-                            <h:outputText value="Cost:"/>
-                            <h:outputText value="#{dishController.selected.cost}" />
-                            
-                            
+                             <h:outputText value="Spots Available" />
+                             <h:outputText value="#{dishController.getAvailability()}" />
+                             
+                             <h:outputText value="Distance:" />
+                             <h:outputText value="#{dishController.calculateDistance()}" />
+                             
+                             <h:outputText value="Reservation required by:" />
+                             <h:outputText value="#{dishController.selected.reservationTime}" />
+                             
+                             <h:outputText value="Meal Date and Time" />
+                             <h:outputText value="#{dishController.selected.mealTime}" />
+                             
+                             <h:outputText value="Cost:"/>
+                             <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <c:if test="#{dishController.isGuest() == true}">
+                                <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
+                            </c:if>
+                            <c:if test="#{dishController.isGuest() == false}">
+                                <p:commandButton  value="Pay and Reserve" actionListener="#{dishController.reserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl"/>
+                            </c:if>
+                        </c:if>
                     </h:panelGroup>
                 </div>
             </h:form>
