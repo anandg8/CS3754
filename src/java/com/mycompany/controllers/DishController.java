@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 
 @Named("dishController")
 @SessionScoped
@@ -57,10 +58,12 @@ public class DishController implements Serializable {
     
     public List<Dish> getCurrentReservations() {
         return getFacade().findCurrentReservationsByUser(accountManager.getSelected().getId());
+
     }
     
     public List<Dish> getPastReservations() {
-        return getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
+        List<Dish> temp = getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
+        return temp;
     }
 
     public Dish prepareCreate() {

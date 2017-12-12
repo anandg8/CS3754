@@ -23,9 +23,11 @@
                                          paginator="true"
                                          rowKey="#{item.id}"
                                          rows="10"
+                                         widgetVar="currentReservations"
                                          rowsPerPageTemplate="10,20,30,40,50"
                                          >
-
+                                         <p:ajax event="rowSelect"   update="viewButton"/>
+                                         <p:ajax event="rowUnselect" update="viewButton"/>
 
 
                                 <p:column style="width: 150px">
@@ -76,7 +78,9 @@
                                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                                     </h:outputText>
                                 </p:column>
-
+                            <f:facet name="footer">
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialog').show()" disabled="#{empty dishController.selected}"/>
+                            </f:facet>
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
@@ -87,9 +91,12 @@
                                          paginator="true"
                                          rowKey="#{item.id}"
                                          rows="10"
+                                         widgetVar="previousReservations"
                                          rowsPerPageTemplate="10,20,30,40,50"
                                          >
-
+                                         <p:ajax event="rowSelect"   update="viewButton"/>
+                                         <p:ajax event="rowUnselect" update="viewButton"/>
+                                         
                                 <p:column style="width: 150px">
                                     <f:facet name="header">
                                         <h:outputText value="Picture"/>
@@ -138,12 +145,16 @@
                                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                                     </h:outputText>
                                 </p:column>
-
+                            <f:facet name="footer">
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialogPastReservations').show()" disabled="#{empty dishController.selected}"/>
+                            </f:facet>
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
                 </p:tabView>
             </h:form>
+            <ui:include src="ViewAndRefund.xhtml"/>
+            <ui:include src="ViewAndRate.xhtml"/>
         </ui:define>
     </ui:composition>
 
