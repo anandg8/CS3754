@@ -3,13 +3,51 @@
 Created by Ananthavel Guruswamy on 2017.12.12 
 Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="DishViewDlg" widgetVar="DishViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}" >
+            <h:form id="DishViewForm">
+                <br />
+                <div align="right">
+<!--                    <h:link outcome="/dish/Report" styleClass="arialTen">
+                                <i class="fa fa-exclamation-triangle">&nbsp;</i>
+                    </h:link>&nbsp;&nbsp;-->
+                    <br />
+                    <br />
+                </div>
+                <div align="center">
+                    <h:panelGroup id="display" rendered="#{dishController.selected != null}">
+                        <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
+                        <br />
+                        <br />
+                        <p:rating value='#{dishController.selected.userId.userRating}' stars="5" readonly="true" />
+                         <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+                             <h:outputText value="Spots Available" />
+                             <h:outputText value="#{dishController.getAvailability()}" />
+                             
+                             <h:outputText value="Distance:" />
+                             <h:outputText value="#{dishController.calculateDistance()}" />
+                             
+                             <h:outputText value="Reservation required by:" />
+                             <h:outputText value="#{dishController.selected.reservationTime}" />
+                             
+                             <h:outputText value="Meal Date and Time" />
+                             <h:outputText value="#{dishController.selected.mealTime}" />
+                             
+                             <h:outputText value="Cost:"/>
+                             <h:outputText value="#{dishController.selected.cost}" />                   
+                         </p:panelGrid>
+                    </h:panelGroup>
+                </div>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
 </html>

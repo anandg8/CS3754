@@ -62,6 +62,11 @@ public class DishController implements Serializable {
     public List<Dish> getPastReservations() {
         return getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
     }
+    
+    public List<Dish> getCurrentUserDishes()
+    {
+        return getFacade().findCurrentUserDishes(accountManager.getSelected().getId());
+    }
 
     public Dish prepareCreate() {
         selected = new Dish();
@@ -129,6 +134,10 @@ public class DishController implements Serializable {
     }
     
     public int getAvailability() {
+        if (selected == null) 
+        {
+            return 0;
+        }
         return (selected.getNumGuests() - getFacade().getCurrentNumReservations(selected.getId()));
     }
     
@@ -140,9 +149,10 @@ public class DishController implements Serializable {
         return 0;
     }
     
-    public boolean isGuest() {
+    public boolean isGuest()
+    {
         if (selected == null || accountManager.getSelected() == null) {
-            System.out.println("selected is null");
+            System.out.println("Selected is null!");
             return true;
         }
         return getFacade().isGuest(accountManager.getSelected().getId(), selected.getId());
