@@ -114,7 +114,6 @@ public class Dish implements Serializable {
         this.reservationTime = reservationTime;
         this.mealTime = mealTime;
         this.cost = cost;
-        this.numGuests = numGuests;
     }
 
     public Integer getId() {

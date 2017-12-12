@@ -5,11 +5,16 @@
 package com.mycompany.managers;
 
 import com.mycompany.EntityBeans.User;
+import com.mycompany.EntityBeans.UserPhoto;
 
 import com.mycompany.FacadeBeans.UserFacade;
+import com.mycompany.FacadeBeans.UserPhotoFacade;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -115,6 +120,9 @@ public class AccountManager implements Serializable {
      */
     @EJB
     private UserFacade userFacade;
+    
+    @EJB
+    private UserPhotoFacade userPhotoFacade;
 
     // Constructor method instantiating an instance of AccountManager
     public AccountManager() {
@@ -287,6 +295,10 @@ public class AccountManager implements Serializable {
 
     public UserFacade getUserFacade() {
         return userFacade;
+    }
+    
+    public UserPhotoFacade getUserPhotoFacade() {
+        return userPhotoFacade;
     }
 
     /*
@@ -546,7 +558,7 @@ public class AccountManager implements Serializable {
 
             try {
                 // Delete all of the photo files associated with the signed-in user whose primary key is user_id
-                //deleteAllUserPhotos(user_id);
+                deleteAllUserPhotos(user_id);
 
                 // Delete all of the user files associated with the signed-in user whose primary key is user_id
                 //deleteAllUserFiles(user_id);
@@ -566,6 +578,47 @@ public class AccountManager implements Serializable {
             return "index.xhtml?faces-redirect=true";
         }
         return "";
+    }
+    
+    /*
+    Delete both uploaded and thumbnail photo files that belong to the User
+    object whose database primary key is userId
+     */
+    public void deleteAllUserPhotos(int userId) {
+
+        /*
+        Obtain the list of Photo objects that belong to the User whose
+        database primary key is userId.
+         */
+        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
+
+        if (!photoList.isEmpty()) {
+
+            // Obtain the object reference of the first Photo object in the list.
+            UserPhoto photo = photoList.get(0);
+            try {
+                /*
+                 Delete the user's photo if it exists.
+                 getFilePath() is given in UserPhoto.java file.
+                 */
+                Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));
+
+                /*
+                 Delete the user's thumbnail image if it exists.
+                 getThumbnailFilePath() is given in UserPhoto.java file.
+                 */
+                Files.deleteIfExists(Paths.get(photo.getThumbnailFilePath()));
+
+                // Delete the temporary file if it exists
+                Files.deleteIfExists(Paths.get(Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file"));
+
+                // Remove the user's photo's record from the CloudDriveDB database
+                getUserPhotoFacade().remove(photo);
+
+            } catch (IOException e) {
+                statusMessage = "Something went wrong while deleting user's photo! See: " + e.getMessage();
+            }
+        }
     }
 
     // Validate if the entered password matches the entered confirm password
@@ -797,9 +850,53 @@ public class AccountManager implements Serializable {
 
         // Invalidate the logged-in User's session
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-
         // Redirect to show the index (Home) page
-        return "index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
+    }
+    public String userPhoto() {
+
+        // Obtain the signed-in user's username
+        String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        // Obtain the object reference of the signed-in user
+        User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
+
+        // Obtain the id (primary key in the database) of the signedInUser object
+        Integer userId = signedInUser.getId();
+
+        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
+
+        if (photoList.isEmpty()) {
+            /*
+            No user photo exists. Return defaultUserPhoto.png 
+            in CloudStorage/PhotoStorage.
+             */
+            return Constants.DEFAULT_PHOTO_RELATIVE_PATH;
+        }
+
+        /*
+        photoList.get(0) returns the object reference of the first Photo object in the list.
+        getThumbnailFileName() message is sent to that Photo object to retrieve its
+        thumbnail image file name, e.g., 5_thumbnail.jpeg
+         */
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        /*
+        In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
+        Alternate Document Root with the following statement:
+        
+        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Users/Balci" />
+        
+        in Constants.java file, we defined the relative photo file path as
+        
+        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+        
+        Thus, JSF knows that 'CloudStorage/' is the document root directory.
+         */
+        String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
+
+        return relativePhotoFilePath;
     }
 
 }

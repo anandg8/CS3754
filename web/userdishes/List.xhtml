@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Ananthavel Guruswamy on 2017.12.12 
+Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -16,7 +20,7 @@
             <p:growl id="growl" life="5000" />
             <h:form id="DishListForm">
                 <p:panel header="#{bundle.ListDishTitle}">
-                    <p:dataTable id="datalist" value="#{dishController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{dishController.getCurrentUserDishes()}" var="item"
                                  selectionMode="single" selection="#{dishController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
@@ -83,10 +87,10 @@
                             </h:outputText>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialog').show()" disabled="#{empty dishController.selected}"/>
                             <c:if test="#{accountManager.isLoggedIn() == true}">  
                                 <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{dishController.prepareCreate}" update=":DishCreateForm" oncomplete="PF('DishCreateDialog').show()"/>
                             </c:if>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialog').show()" disabled="#{empty dishController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

@@ -49,4 +49,56 @@ public class DishFacade extends AbstractFacade<Dish> {
                 .executeUpdate();
     }
     
+    public int getCurrentNumReservations(int dishID) {
+        return ((Long)getEntityManager().createNativeQuery("SELECT COUNT(*) FROM guest_list WHERE dish_id = ?").setParameter(1, dishID).getSingleResult()).intValue();
+    }
+
+    public boolean isGuest(int userid, int dishid) {
+        int count = ((Long)getEntityManager().createNativeQuery("SELECT COUNT(*) FROM guest_list WHERE user_id = ? AND dish_id = ?")
+                .setParameter(1, userid)
+                .setParameter(2, dishid)
+                .getSingleResult()).intValue();
+        System.out.println("count is: " + count + "\n userid is:" +userid + "\n dish is: " + dishid);
+        return count == 1;        
+            
+    }
+
+    public void reserveDish(int dishid, int userid) {
+        getEntityManager().createNativeQuery("INSERT INTO guest_list VALUES(?, ?, \"\")")
+                .setParameter(1, userid)
+                .setParameter(2, dishid)
+                .executeUpdate();
+    }
+    
+    public void unreserveDish(int dishid, int userid) {
+        getEntityManager().createNativeQuery("DELETE FROM guest_list WHERE dish_id = ? AND user_id = ?")
+                .setParameter(1, dishid)
+                .setParameter(2, userid)
+                .executeUpdate();
+        
+    }
+
+    public List<Dish> findCurrentReservationsByUser(int userid) {
+        List<Dish> list = getEntityManager().createNativeQuery("SELECT dish.* FROM dish INNER JOIN guest_list ON dish.id = guest_list.dish_id WHERE (guest_list.user_id = ? AND CURRENT_TIMESTAMP < dish.reservation_time)", Dish.class)
+                .setParameter(1, userid)
+                .getResultList();
+        return list;
+    }
+    
+    public List<Dish> findPastReservationsByUser(int userid) {
+        List<Dish> list = getEntityManager().createNativeQuery("SELECT dish.* FROM dish INNER JOIN guest_list ON dish.id = guest_list.dish_id WHERE (guest_list.user_id = ? AND CURRENT_TIMESTAMP > dish.meal_time)", Dish.class)
+                .setParameter(1, userid)
+                .getResultList();
+        return list;
+    }
+    
+    public List<Dish> findCurrentUserDishes(int userID)
+    {
+        List<Dish> userDishList = getEntityManager().createNativeQuery("SELECT dish.* FROM dish INNER JOIN user ON dish.user_id = user.id WHERE (user.id = ?)", Dish.class)
+                .setParameter(1, userID)
+                .getResultList();
+        
+        return userDishList;
+    }
+    
 }

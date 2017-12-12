@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 
 @Named("dishController")
 @SessionScoped
@@ -29,6 +30,7 @@ public class DishController implements Serializable {
     private com.mycompany.FacadeBeans.DishFacade ejbFacade;
     private List<Dish> items = null;
     private Dish selected;
+
 
     @Inject
     AccountManager accountManager;
@@ -52,6 +54,21 @@ public class DishController implements Serializable {
 
     private DishFacade getFacade() {
         return ejbFacade;
+    }
+    
+    public List<Dish> getCurrentReservations() {
+        return getFacade().findCurrentReservationsByUser(accountManager.getSelected().getId());
+
+    }
+    
+    public List<Dish> getPastReservations() {
+        List<Dish> temp = getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
+        return temp;
+    }
+    
+    public List<Dish> getCurrentUserDishes()
+    {
+        return getFacade().findCurrentUserDishes(accountManager.getSelected().getId());
     }
 
     public Dish prepareCreate() {
@@ -118,6 +135,31 @@ public class DishController implements Serializable {
             }
         }
     }
+    
+    public int getAvailability() {
+        if (selected == null) 
+        {
+            return 0;
+        }
+        return (selected.getNumGuests() - getFacade().getCurrentNumReservations(selected.getId()));
+    }
+    
+    public double calculateDistance() {
+        /*
+            Get current user's location
+            Get dishes' location
+        */
+        return 0;
+    }
+    
+    public boolean isGuest()
+    {
+        if (selected == null || accountManager.getSelected() == null) {
+            System.out.println("Selected is null!");
+            return true;
+        }
+        return getFacade().isGuest(accountManager.getSelected().getId(), selected.getId());
+    }
 
     public Dish getDish(java.lang.Integer id) {
         return getFacade().find(id);
@@ -129,6 +171,18 @@ public class DishController implements Serializable {
 
     public List<Dish> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    
+    public void reserveDish() {
+        getFacade().reserveDish(selected.getId(), accountManager.getSelected().getId());
+        JsfUtil.addSuccessMessage("Dish has been reserved!");
+        //transfer funds
+    }
+    
+    public void unreserveDish() {
+        getFacade().unreserveDish(selected.getId(), accountManager.getSelected().getId());
+        JsfUtil.addSuccessMessage("Refunding your money...");
+        //refund funds
     }
 
     @FacesConverter(forClass = Dish.class)

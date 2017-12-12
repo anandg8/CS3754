@@ -161,6 +161,14 @@ INSERT INTO `user` (`id`, `username`, `password`, `email`, `first_name`, `last_n
 
 -- --------------------------------------------------------
 
+CREATE TABLE UserPhoto
+(
+       id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+       extension ENUM('jpeg', 'jpg', 'png', 'gif') NOT NULL,
+       user_id INT UNSIGNED,
+       FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
 --
 -- Table structure for table `votes`
 --
