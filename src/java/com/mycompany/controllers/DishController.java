@@ -29,8 +29,7 @@ public class DishController implements Serializable {
     private com.mycompany.FacadeBeans.DishFacade ejbFacade;
     private List<Dish> items = null;
     private Dish selected;
-    private List<Dish> currentReservations = null;
-    private List<Dish> pastReservations = null;
+
 
     @Inject
     AccountManager accountManager;
@@ -57,15 +56,11 @@ public class DishController implements Serializable {
     }
     
     public List<Dish> getCurrentReservations() {
-        if (currentReservations == null)
-            currentReservations = getFacade().findCurrentReservationsByUser(accountManager.getSelected().getId());
-        return currentReservations;
+        return getFacade().findCurrentReservationsByUser(accountManager.getSelected().getId());
     }
     
     public List<Dish> getPastReservations() {
-        if (pastReservations == null)
-            pastReservations = getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
-        return pastReservations;
+        return getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
     }
 
     public Dish prepareCreate() {
