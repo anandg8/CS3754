@@ -77,5 +77,20 @@ public class DishFacade extends AbstractFacade<Dish> {
                 .executeUpdate();
         
     }
+
+    public List<Dish> findCurrentReservationsByUser(int userid) {
+        List<Dish> list = getEntityManager().createNativeQuery("SELECT dish.* FROM dish INNER JOIN guest_list ON dish.id = guest_list.dish_id WHERE (guest_list.user_id = ? AND CURRENT_TIMESTAMP < dish.reservation_time)", Dish.class)
+                .setParameter(1, userid)
+                .getResultList();
+        return list;
+    }
+    
+    public List<Dish> findPastReservationsByUser(int userid) {
+        System.out.println("userid: " + userid);
+        List<Dish> list = getEntityManager().createNativeQuery("SELECT dish.* FROM dish INNER JOIN guest_list ON dish.id = guest_list.dish_id WHERE (guest_list.user_id = ? AND CURRENT_TIMESTAMP > dish.meal_time)", Dish.class)
+                .setParameter(1, userid)
+                .getResultList();
+        return list;
+    }
     
 }
