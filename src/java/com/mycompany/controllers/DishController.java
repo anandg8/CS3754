@@ -137,7 +137,7 @@ public class DishController implements Serializable {
     }
     
     public int getAvailability() {
-        if (selected == null) 
+        if (selected == null || selected.getId() == null) 
         {
             return 0;
         }
@@ -152,13 +152,12 @@ public class DishController implements Serializable {
         return 0;
     }
     
-    public boolean isGuest()
-    {
-        if (selected == null || accountManager.getSelected() == null) {
-            System.out.println("Selected is null!");
+    public boolean isGuest() {
+        if (selected == null || accountManager.getSelected() == null || selected.getId() == null) {
             return true;
         }
         return getFacade().isGuest(accountManager.getSelected().getId(), selected.getId());
+
     }
 
     public Dish getDish(java.lang.Integer id) {
