@@ -185,6 +185,14 @@ Style the div component whose unique id is "rightAlignPanelGroup" per reference
 #rightAlignPanelGroup {
     float: right;
 }
+
+/* Style the Google map display */
+.map {
+    margin-left: 10px;
+    margin-right: 40px;
+    height:600px;
+}
+
 /* 
 Place the logo image on the left top corner per reference
 <h:panelGrid columns="2" columnClasses="leftTopCornerAlign, rightTopCornerAlign">
