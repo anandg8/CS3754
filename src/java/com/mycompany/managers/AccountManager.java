@@ -13,6 +13,8 @@ import com.mycompany.FacadeBeans.UserPhotoFacade;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -556,7 +558,7 @@ public class AccountManager implements Serializable {
 
             try {
                 // Delete all of the photo files associated with the signed-in user whose primary key is user_id
-                //deleteAllUserPhotos(user_id);
+                deleteAllUserPhotos(user_id);
 
                 // Delete all of the user files associated with the signed-in user whose primary key is user_id
                 //deleteAllUserFiles(user_id);
@@ -576,6 +578,47 @@ public class AccountManager implements Serializable {
             return "index.xhtml?faces-redirect=true";
         }
         return "";
+    }
+    
+    /*
+    Delete both uploaded and thumbnail photo files that belong to the User
+    object whose database primary key is userId
+     */
+    public void deleteAllUserPhotos(int userId) {
+
+        /*
+        Obtain the list of Photo objects that belong to the User whose
+        database primary key is userId.
+         */
+        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
+
+        if (!photoList.isEmpty()) {
+
+            // Obtain the object reference of the first Photo object in the list.
+            UserPhoto photo = photoList.get(0);
+            try {
+                /*
+                 Delete the user's photo if it exists.
+                 getFilePath() is given in UserPhoto.java file.
+                 */
+                Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));
+
+                /*
+                 Delete the user's thumbnail image if it exists.
+                 getThumbnailFilePath() is given in UserPhoto.java file.
+                 */
+                Files.deleteIfExists(Paths.get(photo.getThumbnailFilePath()));
+
+                // Delete the temporary file if it exists
+                Files.deleteIfExists(Paths.get(Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file"));
+
+                // Remove the user's photo's record from the CloudDriveDB database
+                getUserPhotoFacade().remove(photo);
+
+            } catch (IOException e) {
+                statusMessage = "Something went wrong while deleting user's photo! See: " + e.getMessage();
+            }
+        }
     }
 
     // Validate if the entered password matches the entered confirm password
