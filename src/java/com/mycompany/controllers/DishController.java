@@ -118,6 +118,26 @@ public class DishController implements Serializable {
             }
         }
     }
+    
+    public int getAvailability() {
+        return (selected.getNumGuests() - getFacade().getCurrentNumReservations(selected.getId()));
+    }
+    
+    public double calculateDistance() {
+        /*
+            Get current user's location
+            Get dishes' location
+        */
+        return 0;
+    }
+    
+    public boolean isGuest() {
+        if (selected == null || accountManager.getSelected() == null) {
+            System.out.println("selected is null");
+            return true;
+        }
+        return getFacade().isGuest(accountManager.getSelected().getId(), selected.getId());
+    }
 
     public Dish getDish(java.lang.Integer id) {
         return getFacade().find(id);
@@ -129,6 +149,18 @@ public class DishController implements Serializable {
 
     public List<Dish> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    
+    public void reserveDish() {
+        getFacade().reserveDish(selected.getId(), accountManager.getSelected().getId());
+        JsfUtil.addSuccessMessage("Dish has been reserved!");
+        //transfer funds
+    }
+    
+    public void unreserveDish() {
+        getFacade().unreserveDish(selected.getId(), accountManager.getSelected().getId());
+        JsfUtil.addSuccessMessage("Refunding your money...");
+        //refund funds
     }
 
     @FacesConverter(forClass = Dish.class)

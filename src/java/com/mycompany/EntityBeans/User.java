@@ -321,8 +321,8 @@ public class User implements Serializable {
         this.location = location;
     }
 
-    public double getUserRating() {
-        return userRating;
+    public int getUserRating() {
+        return (int)userRating;
     }
 
     public void setUserRating(double userRating) {
