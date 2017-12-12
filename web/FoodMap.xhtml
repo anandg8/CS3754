@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Dong Gyu Lee on 2017.12.06
+Copyright © 2017 Dong Gyu Lee. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Food Map"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- 
+            PrimeFaces gmap is used to display the VT campus Google map.
+            See http://www.primefaces.org/showcase/ui/data/gmap/basic.xhtml
+            
+            The map is styled under class 'map' in siteStyles.css
+            
+            *************************************************************************************************
+            NOTE: p:gmap will NOT work unless you specify your Google Maps JavaScript API Developer Key.
+            I specified mine in siteTemplate.xhtml as follows:
+            
+                <script src="https://maps.google.com/maps/api/js?key=AIzaSyDUMWJdnV_fekj5InNCV82_hBq_gKWG8lw" 
+                type="text/javascript"></script>
+            
+            This is given in siteTemplate.xhtml so that each page can use Google Maps JavaScript API. 
+            *************************************************************************************************
+            -->
+            <p:gmap center="#{accountManager.selected.location}" zoom="15" type="HYBRID" class="map" model="#{mapManager.getMapModel(accountManager.selected)}">
+                <p:ajax event="overlaySelect" listener="#{mapManager.onMarkerSelect}" />
+                <p:gmapInfoWindow id="mapManager">
+                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+                        <!--
+                        <p:graphicImage name="http://www.seriouseats.com/recipes/assets_c/2015/04/20140328-general-tsos-chicken-recipe-food-lab-1-thumb-1500xauto-422309.jpg" height="150" />
+                        <br />-->
+                        <h:outputText value="User: #{mapManager.marker.title}" />
+                    </p:outputPanel>
+                </p:gmapInfoWindow>
+                
+            </p:gmap>
+            
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
