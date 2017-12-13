@@ -23,7 +23,7 @@
                     <h:panelGroup id="display" rendered="#{dishController.selected != null}">
                         <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
                         <br />
-                        <br />
+
                         <p:rating value='#{dishController.selected.userId.userRating}' stars="5" readonly="true" />
                          <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
                              <h:outputText value="Spots Available" />

@@ -45,7 +45,7 @@ public class DishPhotoFacade extends AbstractFacade<DishPhoto> {
      */
     public List<DishPhoto> findPhotosByDishID(Integer dishID) {
 
-        return (List<DishPhoto>) em.createNamedQuery("DishPhoto.findPhotosByUserID")
+        return (List<DishPhoto>) em.createNamedQuery("DishPhoto.findPhotosByDishID")
                 .setParameter("dish_id", dishID)
                 .getResultList();
     }

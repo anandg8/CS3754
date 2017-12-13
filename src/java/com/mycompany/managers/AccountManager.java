@@ -465,6 +465,8 @@ public class AccountManager implements Serializable {
             }
             // Initialize the session map for the newly created User object (see the method below)
             initializeSessionMap();
+            
+            getUserFacade().createCreditAccount(getUserFacade().findByUsername(getUsername()).getId());
 
             /*
             The Profile page cannot be shown since the new User has not signed in yet.

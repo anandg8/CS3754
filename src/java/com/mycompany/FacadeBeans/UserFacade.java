@@ -75,7 +75,6 @@ public class UserFacade extends AbstractFacade<User> {
         q.setParameter(1, "" + id);
         Integer d = (Integer) q.getSingleResult();
         return d.intValue();
-
     }
 
     public void createCreditAccount(Integer id) {

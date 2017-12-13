@@ -40,7 +40,7 @@ public class DishFacade extends AbstractFacade<Dish> {
                 .setParameter(2, dish.getCuisineId().getId())
                 .setParameter(3, dish.getDishName())
                 .setParameter(4, dish.getDescription())
-                .setParameter(5, "")
+                .setParameter(5, dish.getDishPicturePath())
                 .setParameter(6, dish.getReservationTime())
                 .setParameter(7, dish.getMealTime())
                 .setParameter(8, dish.getCost())
