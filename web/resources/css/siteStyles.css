@@ -1,21 +1,20 @@
 /*********************************************
 Cascading Style Sheets (CSS) Style Definitions
-Composed by Osman Balci.
+Composed by Osman Balci on April 14, 2017.
 *********************************************/
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html, body {
-    /*-------------------------------------------------------------
-    Preferably, use a background color. Uncomment the one you like 
-    from examples below or select your own. See more HTML colors at 
-    http://www.w3schools.com/colors/colors_names.asp
-    -------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------------
+    Preferably, use a background color. Uncomment the one you like from examples below.
+    See more HTML colors at http://www.w3schools.com/colors/colors_names.asp
+    ---------------------------------------------------------------------------------*/
     /* background-color: #F0F8FF;   /* AliceBlue */
     /* background-color: #F0FFFF;   /* Azure */
     /* background-color: #F5F5DC;   /* Beige */
     /* background-color: #DCDCDC;   /* Gainsboro */
     /* background-color: #FFFFF0;   /* Ivory */
-    /* background-color: #FAF0E6;   /* Linen */
-    background-color: #FDF5E6;   /* OldLace */
+    /* background-color: #FDF5E6;   /* OldLace */
     /* background-color: #FFEFD5;   /* PapayaWhip */
     /* background-color: #F5DEB3;   /* Wheat */
     /* background-color: #B0E0E6;   /* PowderBlue */
@@ -27,24 +26,25 @@ html, body {
     -o-background-size: cover;      /* For Opera */
     background-size: cover;         /* Generic */
     background-repeat: no-repeat;   /* Do not repeat the image */
-
+    padding: 0px;
+    margin: 0px;
     width: 100%;                    /* Set page width horizontally 100% */
     height: 100%;                   /* Set page height vertically 100% */
 }
 
 /* Style the text used under the standard HTML tag "body" */
 body {
-    font-family: "Times New Roman", Times, Serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 12pt;
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
     color: black;
+    background-color: #ECF0F1;
 }
 
 /* Style the text used under the standard HTML tag "p" for paragraph */
 p {
-    font-family: "Times New Roman", Times, serif;
     font-size: 12pt;
     font-style: normal;
     font-weight: normal;
@@ -55,29 +55,27 @@ p {
 
 /* Style the text used under the standard HTML tag "h1" for header 1 */
 h1 {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     font-style: normal;
-    font-weight: normal;
+    font-weight: bold;
     text-decoration: none;
     color: #006400; /* Dark Green */
 }
 
 /* Style the text used under the standard HTML tag "h2" for header 2 */
 h2 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
+    font-size: 24pt;
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: #800000; /* Maroon */
+    font-weight: bold;
+    color: #e74c3c; /* Maroon */
 }
 
 /*
 ==================
 Styling Hyperlinks
 ==================
-The <a> tag defines a hyperlink.
 Hyperlinks (or links) are styled differently depending on what state they are in:
     a:link      - normal state (unvisited link)
     a:visited   - visited state (link clicked on by user earlier)
@@ -85,10 +83,7 @@ Hyperlinks (or links) are styled differently depending on what state they are in
     a:active    - active state (link currently clicked on by user)
 */
 
-/* Set the font family for the standard HTML tag "a" for hyperlinks */
-a {
-    font-family: Arial, Helvetica, sans-serif
-}
+
 
 a:link {
     text-decoration: none; /* Do not underline the link in normal state */
@@ -119,7 +114,7 @@ See CSS Selector Reference at http://www.w3schools.com/cssref/css_selectors.asp
 .stylename defines the style of all elements marked as class="stylename" or
 styleClass="stylename". Note that styleClass is converted to class.
 
-Since ids are unique, the #id styling is used only once.
+Since id's are unique, the #id styling is used only once.
 .stylename can be used many times to style a class of elements.
 */
 
@@ -128,7 +123,7 @@ Style the div component whose unique id is "page" per reference
 <div id="page"> in siteTemplate.xhtml
 */
 #page {
-    font-family: "Times New Roman", Times, Serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 12pt;
     font-style: normal;
     font-weight: normal;
@@ -140,14 +135,20 @@ Style the div component whose unique id is "header" per reference
 <div id="header"> in siteTemplate.xhtml
 */
 #header {
-    background-color: #F0FFFF;   /* Azure */
+    background-color: white;   /* PowderBlue */
     width: 100%;
     height: 84px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    margin-bottom: 16px;
+    padding: 15px;
+    padding-top: 25px;
+    margin-bottom: 10px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+#header a{
+    color: #e74c3c;
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 15px;
 }
 /* 
 Style the div component whose unique id is "editableContent" per reference 
@@ -157,42 +158,34 @@ Style the div component whose unique id is "editableContent" per reference
     /* height = 100% window height - (header height 84px + footer height 100px) */
     height: calc(100% - 184px); 
     width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 100px;
-    margin-bottom: 16px;
+    margin-top: 0px;
 }
 /* 
 Style the div component whose unique id is "footer" per reference 
 <div id="footer"> in siteTemplate.xhtml
 */
 #footer {
+    background-color: white;
     height: 100px;
     width: 100%;
     left: 0px;
     right: 0px;
     bottom: 0px;
 }
-
-/*
-========================
-Vertical Navigation Menu
-========================
+/* 
+Style the div component whose unique id is "footerPanelGrid" per reference
+<h:panelGrid id="footerPanelGrid" columns="2"> in footerTemplate.xhtml 
 */
-
-/* Style class for <li> */
-.verticalMenuItem {
-    text-align: left;
-    border-bottom: 1px solid #555;
+#footerPanelGrid {
+    width: 80%;
 }
-
-/* Style the Google map display */
-.map {
-    margin-left: 10px;
-    margin-right: 40px;
-    height:600px;
+/* 
+Style the div component whose unique id is "rightAlignPanelGroup" per reference
+<h:panelGroup id="rightAlignPanelGroup"> in footerTemplate.xhtml 
+*/
+#rightAlignPanelGroup {
+    float: right;
 }
-
 /* 
 Place the logo image on the left top corner per reference
 <h:panelGrid columns="2" columnClasses="leftTopCornerAlign, rightTopCornerAlign">
@@ -204,24 +197,16 @@ in headerTemplate.xhtml
     top: 0;
     padding: 7px;
 }
-
-/* Style class for <ul>, <li> and <a> hyperlink tag */
-.verticalMenu, .verticalMenuItem a {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-}
-
-/* Style class for <li> last-child */
-.verticalMenuItem:last-child {
-    border-bottom: none;
-}
-
-/* Style class for <li> for mouse over state */
-.verticalMenuItem a:hover {
-    background-color: #87CEFA; /* Light Sky Blue */
-    color: darkblue; 
+/* 
+Place the navigation menu bar on the right top corner per reference
+<h:panelGrid columns="2" columnClasses="leftTopCornerAlign, rightTopCornerAlign">
+in headerTemplate.xhtml 
+*/
+.rightTopCornerAlign {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    padding: 10px;
 }
 
 /*
@@ -230,101 +215,70 @@ Other Style Definitions
 =======================
 */
 
-/* Used in footerTemplate and Profile */
-.arialTen {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-}
-
-/* Used in EditAccount and UserFiles */
-.alertUser {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-    color: darkred;
-}
-
-/* Used in CreateAccount, EditAccount, SignIn, and Profile */
-.accountColumn1, .signInColumn1, .profileColumn1 {
+/* 
+Right align column 1 text and disallow line breaks per reference
+<p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+in Create.xhtml, View.xhtml, Edit.xhtml, StockQuote.xhtml. 
+*/
+.columnOne {
     text-align: right;
-    background-color: #FFE4C4;   /* Bisque */
     white-space: nowrap;  /* Disallow line break */
+    background-color: #F5DEB3;   /* Wheat */
 }
-
-/* Used in CreateAccount and EditAccount */
-.accountColumn2, .signInColumn2, .profileColumn2 {
+/* 
+Left align column 2 text and disallow line breaks per reference
+<p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+in Create.xhtml, View.xhtml, Edit.xhtml, StockQuote.xhtml.
+*/
+.columnTwo {
     text-align: left;
-    background-color: #FFEBCD;   /* Blanched Almond  */
     white-space: nowrap;  /* Disallow line break */
+    background-color: #FFEFD5;   /* PapayaWhip */
 }
 
-/* Style error messages text */
+/* Style error messages text in UploadFile.xhtml */
 .errorMessages {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 12pt;
     font-style: normal;
     font-weight: normal;
-    color: #FF0000; /* Red */
+    color: #800080; /* Purple */
 }
 
-/* Style a heading text */
-.heading {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14pt;
+/* Style alert message text in UploadFile.xhtml */
+.alertMessage {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 10pt;
     font-style: normal;
     font-weight: normal;
-    color: #006400;  /* Dark Green */
+    color: #800080; /* Purple */
 }
 
-/* Style form item text */
-.formItemText {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
+/* Style the data fields in Create.xhtml, View.xhtml, Edit.xhtml */
+.dataFields {
+    width: 300px;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 10pt;
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
+    color: black;
 }
 
-/* Used in Profile */
-.profilePhoto {
-    display: inline-block;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+/* Style the data fields in List.xhtml, SearchResults.xhtml */
+.displayFields {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
 }
 
-/* Used in UserFiles */
-.previewImage {
-    width: auto;
-    height: 36px;
-}
-
-/* Used in DisplayFile */
-.displayImage {
-    width: auto;
-    max-height: 400px;
-}
-
-/* Used in UserFiles */
-.previewProfilePhoto {
-    display: inline-block;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-}
-
-/* Used in CreateAccount, EditAccount, SignIn, EnterUsername, and SecurityQuestion */
-.accountInputTextField, .signInInputTextField, .usernameInputTextField, .securityAnswerTextField {
-    width: 200px;
+/* Used in List.xhtml, SearchResults.xhtml */
+.companyLogo {
+    height: auto;
+    width: 75px;
 }
 
 /*
@@ -365,21 +319,33 @@ the speed of the transition to change over time.
 =================================
 Skinning PrimeFaces UI Components
 =================================
-Check the documentation of a PrimeFaces UI component to identify
-which styles are used so that you can override them.
 
-You can also Inspect the UI element under the Chrome web browser
-to determine which CSS style is used so that you can override it. 
+Approach 1: 
+    Check the documentation of a PrimeFaces UI component to identify
+    which styles are used so that you can override them.
+
+    You can also Inspect the UI element under the Chrome web browser
+    to determine which CSS style is used so that you can override it. 
+
+Approach 2: 
+    Define a style in this file and apply it to the PrimeFaces element
+    using the styleClass attribute to override the PrimeFaces style.
 
 Styles are applied in a cascading order. To make sure that a
 style is applied regardless of where the style is defined in the
 cascading hierarchy, use the !important attribute.
 */
 
-/* Style PrimeFaces Command Button --> p:commandButton  */
+/* Override the style of the PrimeFaces p:menubar cascading menu in headerTemplate.xhtml */
+.menubar {
+    background: none;
+    border: none;
+}
+
+/* Style PrimeFaces various UI component elements  */
 .commandButton, .ui-confirmdialog-yes, .ui-confirmdialog-no, .ui-fileupload-choose, .ui-fileupload-upload, .ui-fileupload-cancel {
     border-radius: 2em !important;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 10pt !important;
     font-style: normal !important;
     font-weight: normal !important;
@@ -401,10 +367,9 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
     padding-left: 5px;
     padding-right: 5px;
 }
-
 /* Override PrimeFaces style definitions for the Data Table component */
 .ui-datatable-data, .facetHeader, .ui-panel-titlebar, .ui-paginator, .ui-dialog-content, .ui-confirm-dialog-message, .ui-widget-content {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
@@ -413,7 +378,7 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
 
 /* Override PrimeFaces style definitions for the Data Grid component */
 .ui-datagrid, .ui-datagrid-content, .ui-datagrid-data, .ui-datagrid-row, .ui-datagrid-column {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
@@ -423,7 +388,7 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
 
 /* Override PrimeFaces style definitions for the Panel component */
 .ui-panel, .ui-panel-content {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
@@ -447,48 +412,142 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
     padding: 0px 0px 8px 0px !important;
 }
 
-.ui-fileupload-content {
-    /* The drag-and-drop area height will increase as more files are dropped */
-    min-height: 200px;
+.site-name{
+    font-size: 42px !important;
 }
 
-/*
-======================================================
-Auto generated jsfcrud.css content is provided below. 
-Delete jsfcrud.css since its content is provided here.
-======================================================
-*/
-
-/* 
-Set font size in ui-widget styled elements to 12px.
-
-The !important directive forces the style to be applied no matter
-where the style appears in the CSS document.
-*/
-
-.ui-widget {
-    font-size: 12px !important;
+.ui-widget-header{
+    background: none;
+    border: none;
+    background-color: white;
 }
 
-/* 
-The overflow property specifies what happens 
-if content overflows an element's box. 
-*/
-.ui-layout-north {
-    z-index: 20 !important;
-    overflow: visible !important;;
-}
-.ui-layout-north .ui-layout-unit-content {
-    overflow: visible !important;
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    background: none;
+    background-color: white;
 }
 
-/* This styles the <p:panel header="..."> */
-.ui-widget-header {
+.ui-panel-titlebar {
     text-align: center;
-    /* text-transform: uppercase; we do not want this */
+    font-size: 32px;
+    font-weight: bold;
 }
 
-/* Leave 10px pading on top for the ui-button elements */
-.ui-button {
-    margin-top: 10px !important;
+.ui-state-default{
+    font-size: 18px !important;
+    color: black !important;
+    
+}
+
+.ui-widget-content{
+    padding: 25px !important;
+    text-shadow: none;
+    color: black;
+    background: none;
+    background-color: white;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.ui-widget-header{
+    padding: 5px !important;
+    text-shadow: none;
+    color: black;
+    background: none;
+    background-color: white;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.ui-state-highlight{
+    background: none !important;
+    background-color: #ecf0f1 !important;
+}
+.ui-datatable tbody td{
+    text-shadow: none !important;
+    color: black !important;
+    padding: 25px !important;
+    font-size: 18px;
+}
+
+.ui-slider .ui-slider-handle{
+    background-color: #e74c3c !important;
+}
+
+.ui-state-hover{
+    background: none !important;
+    background-color: #ecf0f1 !important;
+    text-shadow: none !important;
+}
+
+.ui-datatable-tablewrapper{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    overflow-x: hidden !important;
+}
+
+.ui-button{
+    border: 1px solid black !important;
+    padding: 5px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    cursor: pointer;
+}
+
+.ui-inputfield{
+    font-size: 16px !important;
+    padding: 7px !important;
+    border: 1px solid black;
+    box-shadow: none !important;
+}
+
+.ui-inputfield:hover{
+    background-color: white !important;
+}
+
+#footer{
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
+}
+
+.signInInputTextField{
+    width: 400px;
+    padding: 10px !important;
+    font-size: 24px !important;
+}
+
+.signInLabel{
+    font-size: 24px;
+    text-align: left;
+}
+
+.dish-desc{
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.dish-desc-view{
+    font-size: 22px;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.ui-panel-title{
+    font-size: 42px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.custom-dialog{
+    background-color: white !important;
+}
+
+#DishListForm{
+    margin-top: 30px;
 }

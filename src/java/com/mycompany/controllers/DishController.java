@@ -87,12 +87,17 @@ public class DishController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    
 
     public void create() {
         selected.setUserId(accountManager.getSelected());
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DishCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+        if (selected.getMealTime().before(selected.getReservationTime())) {
+            JsfUtil.addErrorMessage("Please the meal time after the reservation time!");
+        } else {
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DishCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
         }
     }
 
