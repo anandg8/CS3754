@@ -4,9 +4,14 @@
  */
 package com.mycompany.EntityBeans;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
+import javax.imageio.ImageIO;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -66,7 +71,7 @@ public class Dish implements Serializable {
     private String description;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 0, max = 255)
     @Column(name = "dish_picture_path")
     private String dishPicturePath;
     @Basic(optional = false)
@@ -145,7 +150,14 @@ public class Dish implements Serializable {
     }
 
     public void setDishPicturePath(String dishPicturePath) {
-        this.dishPicturePath = dishPicturePath;
+        if (dishPicturePath.length() == 0)
+            this.dishPicturePath = "defaultFoodPhoto.png";
+        else {
+            if (!testImage(dishPicturePath))
+                this.dishPicturePath = dishPicturePath;
+            else
+                this.dishPicturePath = "defaultFoodPhoto.png";
+        }
     }
 
     public Date getReservationTime() {
@@ -238,4 +250,21 @@ public class Dish implements Serializable {
         return "com.mycompany.EntityBeans.Dish[ id=" + id + " ]";
     }
     
+    public Boolean testImage(String url){  
+        try {  
+            BufferedImage image = ImageIO.read(new URL(url));  
+            //BufferedImage image = ImageIO.read(new URL("http://someimage.jpg"));  
+            return (image != null);
+        } catch (MalformedURLException e) {  
+            // TODO Auto-generated catch block  
+            System.err.println("URL error with image");  
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {  
+            System.err.println("IO error with image");  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();
+            return false;  
+        }
+    }
 }

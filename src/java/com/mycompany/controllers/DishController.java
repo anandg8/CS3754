@@ -243,25 +243,5 @@ public class DishController implements Serializable {
         }
 
     }
-    
-    public String generateTable() {
-        String html = "<main><table><thead><tr><th>Picture</th><th>Description</th><th>Cuisine</th><th>Cook</th><th>Cost</th><th>Reservation Time</th><th>Meal Time</th></tr></thead><tbody>";
-        for (Dish d : getItems()) {
-           html += "<tr>";
-           html += "<td data-title='Picture'>";
-           html += "<img src='" + d.getDishPicturePath() + "' style='width:300px'/></td>";
-           html += "<td data-title='Description'>" + d.getDescription() + "</td>";
-           html += "<td data-title='Cuisine'>" + d.getCuisineId().getName() + "</td>";
-           html += "<td data-title='Cook'>" + d.getUserId().getUsername() + "</td>";
-           html += "<td data-title='Cost'>" + d.getCost() + "</td>";
-           html += "<td data-title='Reservation Time'>" + d.getReservationTime() + "</td>";
-           html += "<td data-title='Meal Time'>" + d.getMealTime() + "</td>";
-           html += "<td class='select'><a class='button' href='#'>Select</a></td>";
-           html += "</tr>";
-        }
-        html += "</tbody></table>";
-        
-        return html;
-    }
 
 }
