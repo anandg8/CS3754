@@ -23,7 +23,7 @@ public final class Constants {
         for the storage and retrieval of user's files.
      */
     //public static final String FILES_ABSOLUTE_PATH = "/Users/Balci/CloudStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\amitd\\Documents\\NetBeansProjects\\CookToShare\\UserPhotoStorage";
+    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\DongGyu\\UserPhotoStorage";
 
     /*
     In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the

@@ -8,6 +8,8 @@ package com.mycompany.managers;
 import com.mycompany.EntityBeans.User;
 import com.mycompany.FacadeBeans.UserFacade;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -96,7 +98,7 @@ public class LoginManager implements Serializable {
     Sign in the user if the entered username and password are valid
     @return "" if an error occurs; otherwise, redirect to show the Profile page
      */
-    public String loginUser() {
+    public String loginUser() throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         // Obtain the object reference of the User object from the entered username
         User user = getUserFacade().findByUsername(getUsername());
@@ -110,6 +112,7 @@ public class LoginManager implements Serializable {
             String enteredUsername = getUsername();
 
             String actualPassword = user.getPassword();
+            boolean isPasswordMatched = PasswordHashingManager.validatePassword(actualPassword, getPassword());
             String enteredPassword = getPassword();
 
             if (!actualUsername.equals(enteredUsername)) {
@@ -117,7 +120,7 @@ public class LoginManager implements Serializable {
                 return "";
             }
 
-            if (!actualPassword.equals(enteredPassword)) {
+            if (!isPasswordMatched) {
                 errorMessage = "Invalid Password!";
                 return "";
             }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
 <!--
 Created by Ananthavel Guruswamy on 2017.12.11 
 Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
 -->
-
-<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
 <glassfish-web-app error-url="">
+  <context-root>/CookToShare</context-root>
   <class-loader delegate="true"/>
   <!--
     If you include the keepgenerated property when you deploy the WAR file, the generated source
@@ -23,5 +23,5 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
     requests for certain resources from outside their own docroot"
     See page C-46 in [https://glassfish.java.net/docs/4.0/application-deployment-guide.pdf]
   -->
-  <property name="alternatedocroot_1" value="from=/UserPhotoStorage/* dir=C:/Users/DongGyu" />
+  <property name="alternatedocroot_1" value="from=/UserPhotoStorage/* dir=C:/Users/DongGyu"/>
 </glassfish-web-app>
