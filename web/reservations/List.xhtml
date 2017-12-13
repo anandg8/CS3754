@@ -17,7 +17,7 @@
             <h:form id="DishListForm">
                 <p:tabView>
                     <p:tab title="Current Reservations">
-                        <p:panel header="#{bundle.ListDishTitle}">
+                        <p:panel header="Current Reservations">
                             <p:dataTable id="datalist" value="#{dishController.getCurrentReservations()}" var="item"
                                          selectionMode="single" selection="#{dishController.selected}"
                                          paginator="true"
@@ -26,66 +26,84 @@
                                          widgetVar="currentReservations"
                                          rowsPerPageTemplate="10,20,30,40,50"
                                          >
-                                         <p:ajax event="rowSelect"   update="viewButton"/>
-                                         <p:ajax event="rowUnselect" update="viewButton"/>
 
 
-                                <p:column style="width: 150px">
-                                    <f:facet name="header">
-                                        <h:outputText value="Picture"/>
-                                    </f:facet>
-                                    <div align="center" >
-                                        <img src="#{item.dishPicturePath}" width="100px" height="100px" />
-                                    </div>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_description}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.description}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Cusine"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.cuisineId.name}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Cook User ID"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.userId.username}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_cost}"/>
-                                    </f:facet>
-                                    <h:outputText value="$#{item.cost}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_reservationTime}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.reservationTime}">
-                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                    </h:outputText>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_mealTime}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.mealTime}">
-                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                    </h:outputText>
-                                </p:column>
-                            <f:facet name="footer">
-                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialog').show()" disabled="#{empty dishController.selected}"/>
+                                <p:column exportable="false" style="width:120px;">
+                            <f:facet name="header">
+                                <h:outputText value="Picture" styleClass="facetHeader"/>
                             </f:facet>
+                            <div align="center">
+                                <h:graphicImage value="#{item.dishPicturePath}"
+                                                width="100px" height="100px" />
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDishTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="Cuisine"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuisineId.name}" />
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="Cook User ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userId.username}" />
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDishTitle_cost}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cost}"/>
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDishTitle_reservationTime}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.reservationTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                <br />
+                                <br />
+                                <h:outputText value="#{item.reservationTime}">
+                                    <f:convertDateTime pattern="h:mm a" />
+                                </h:outputText>
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDishTitle_mealTime}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mealTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                <br />
+                                <br />
+                                <h:outputText value="#{item.mealTime}">
+                                    <f:convertDateTime pattern="h:mm a" />
+                                </h:outputText>
+                            </div>
+                        </p:column>
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
                     <p:tab title="Previous Reservations">
-                        <p:panel header="#{bundle.ListDishTitle}">
+                        <p:panel header="Previous Reservations">
                             <p:dataTable id="datalistPrevious" value="#{dishController.getPastReservations()}" var="item"
                                          selectionMode="single" selection="#{dishController.selected}"
                                          paginator="true"
@@ -97,54 +115,77 @@
                                          <p:ajax event="rowSelect"   update="viewButton"/>
                                          <p:ajax event="rowUnselect" update="viewButton"/>
                                          
-                                <p:column style="width: 150px">
-                                    <f:facet name="header">
-                                        <h:outputText value="Picture"/>
-                                    </f:facet>
-                                    <div align="center" >
-                                        <img src="#{item.dishPicturePath}" width="100px" height="100px" />
-                                    </div>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_description}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.description}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Cusine"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.cuisineId.name}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Cook User ID"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.userId.username}" />
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_cost}"/>
-                                    </f:facet>
-                                    <h:outputText value="$#{item.cost}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_reservationTime}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.reservationTime}">
-                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                    </h:outputText>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListDishTitle_mealTime}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.mealTime}">
-                                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                    </h:outputText>
-                                </p:column>
+                                <p:column exportable="false" style="width:120px;">
+                            <f:facet name="header">
+                                <h:outputText value="Picture" styleClass="facetHeader"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:graphicImage value="#{item.dishPicturePath}"
+                                                width="100px" height="100px" />
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDishTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="Cuisine"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cuisineId.name}" />
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="Cook User ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userId.username}" />
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDishTitle_cost}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cost}"/>
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDishTitle_reservationTime}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.reservationTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                <br />
+                                <br />
+                                <h:outputText value="#{item.reservationTime}">
+                                    <f:convertDateTime pattern="h:mm a" />
+                                </h:outputText>
+                            </div>
+                        </p:column>
+                        <p:column>
+                            <div align="center">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDishTitle_mealTime}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mealTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                <br />
+                                <br />
+                                <h:outputText value="#{item.mealTime}">
+                                    <f:convertDateTime pattern="h:mm a" />
+                                </h:outputText>
+                            </div>
+                        </p:column>
                             <f:facet name="footer">
                                 <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DishViewForm" oncomplete="PF('DishViewDialogPastReservations').show()" disabled="#{empty dishController.selected}"/>
                             </f:facet>

@@ -105,8 +105,14 @@ public class MapManager implements Serializable {
             Dish dish = dishes.get(i);
             User tempUser = dish.getUserId();
             String[] userLocationArray = tempUser.getLocation().split(",");
+            LatLng tempCoord;
             if (userLocationArray.length > 0) {
-                LatLng tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), Double.parseDouble(userLocationArray[1]));
+                try {
+                    tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), Double.parseDouble(userLocationArray[1]));
+                } catch (Exception e) {
+                    //parsing error occured
+                    tempCoord = new LatLng(37.228265, -80.421215); //coordinates of blacksburg
+                }
 
                 mapModel.addOverlay(new Marker(tempCoord, tempUser.getUsername(), dish, "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
             }

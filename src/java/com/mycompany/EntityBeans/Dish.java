@@ -176,8 +176,8 @@ public class Dish implements Serializable {
         this.mealTime = mealTime;
     }
 
-    public double getCost() {
-        return cost;
+    public int getCost() {
+        return (int)cost;
     }
 
     public void setCost(double cost) {

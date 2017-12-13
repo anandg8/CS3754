@@ -28,10 +28,11 @@ Copyright © 2017 Anand Guruswamy. All rights reserved.
                     <td align="left" valign="middle">
 
                         <!-- Use absolute path for the image file since it will be accessed from all pages -->
-                        <h:link outcome="/index.html"><img src="#{resource['images:cookshare.png']}"
-                                                      style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                                      alt="Company Logo" />
-                        </h:link>
+                        <a href="/index.html">
+                            <img src="#{resource['images:cookshare.png']}"
+                                                     style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                                     alt="Cook Share" />
+                        </a>
 
                     </td>
                     <td align="center" valign="middle">
@@ -54,9 +55,9 @@ Copyright © 2017 Anand Guruswamy. All rights reserved.
                         -->
 
                         <!-- Clicking "Home" displays the index.xhtml file -->
-                        <h:link outcome="/index" styleClass="arialTen">
+                        <a href="/index.html">
                             <i class="fa fa-home">&nbsp;</i>Home
-                        </h:link>&nbsp;&nbsp;
+                        </a>&nbsp;&nbsp;
 
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
@@ -66,7 +67,7 @@ Copyright © 2017 Anand Guruswamy. All rights reserved.
                             </h:commandLink>&nbsp;&nbsp;
 
                             <!-- Clicking "My Account" displays the Profile.xhtml file -->
-                            <h:link outcome="/Profile" styleClass="arialTen">
+                            <h:link outcome="Profile" styleClass="arialTen">
                                 <i class="fa fa-user">&nbsp;</i>My Account
                             </h:link>&nbsp;&nbsp;
 
@@ -75,26 +76,17 @@ Copyright © 2017 Anand Guruswamy. All rights reserved.
                         <!-- "Sign In" and "Create an Account" if no user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == false}">
                             <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
-                            <h:link outcome="/SignIn" styleClass="arialTen">
+                            <h:link outcome="SignIn" styleClass="arialTen">
                                 <i class="fa fa-sign-in">&nbsp;</i>Sign In
                             </h:link>&nbsp;&nbsp;
 
                             <!-- Clicking "My Account" displays the Profile.xhtml file -->
-                            <h:link outcome="/CreateAccount" styleClass="arialTen">
+                            <h:link outcome="CreateAccount" styleClass="arialTen">
                                 <i class="fa fa-user-plus">&nbsp;</i>Create an Account
                             </h:link>&nbsp;&nbsp;
                         </c:if>
-                       
-                        <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
-                            <h:link outcome="/FoodMap" styleClass="arialTen">
-                                <i class="fa fa-map">&nbsp;</i>Food Map
-                            </h:link>&nbsp;&nbsp;
-                            <h:link outcome="/Chat" styleClass="arialTen">
-                                <i class="fa fa-commenting-o">&nbsp;</i>Chat!
-                            </h:link>&nbsp;&nbsp;
-                        </c:if>
-                       <!-- Clicking "Dishes" displays the index.xhtml file -->
+                        
+                        <!-- Clicking "Dishes" displays the index.xhtml file -->
                         <h:link outcome="/dish/List" styleClass="arialTen">
                             <i class="fa fa-cutlery">&nbsp;</i>Dishes
                         </h:link>&nbsp;&nbsp;

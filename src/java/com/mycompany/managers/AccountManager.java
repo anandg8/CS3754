@@ -309,6 +309,7 @@ public class AccountManager implements Serializable {
     public UserPhotoFacade getUserPhotoFacade() {
         return userPhotoFacade;
     }
+    
 
     /*
     private Map<String, Object> security_questions;
@@ -378,6 +379,7 @@ public class AccountManager implements Serializable {
      */
     // Return True if a user is logged in; otherwise, return False
     public boolean isLoggedIn() {
+        
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username") != null;
     }
 
@@ -459,11 +461,10 @@ public class AccountManager implements Serializable {
                     double lng = (double)geo.get("lng");
                     newUser.setLocation(lat + "," + lng);
                 } catch(Exception e) {
-                    e.printStackTrace();
-                    newUser.setLocation("Blacksburg");
+                    newUser.setLocation("37.228265,-80.421215"); //coordinates for blacksburg
                 }
                 
-                newUser.setUserRating(5.0);
+                newUser.setUserRating(5);
 //                getUserFacade().createCreditAccount(newUser.getId());
                 getUserFacade().create(newUser);
                 

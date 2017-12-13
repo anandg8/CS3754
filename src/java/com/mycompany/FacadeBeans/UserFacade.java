@@ -85,7 +85,7 @@ public class UserFacade extends AbstractFacade<User> {
     }
 
     public void createCreditAccount(Integer id) {
-        em.createNativeQuery("INSERT INTO user_credits VALUES(DEFAULT, ?, 0)").setParameter(1, id).executeUpdate();
+        em.createNativeQuery("INSERT INTO user_credits VALUES(DEFAULT, ?, 100)").setParameter(1, id).executeUpdate();
     }
 
     public void setCredits(int credit, int userid) {

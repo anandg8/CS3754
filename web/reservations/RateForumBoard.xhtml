@@ -25,6 +25,12 @@
         <ui:define name="editableContent">
             <p:growl id="growl" life="5000" />
             <h:form>
+                <div align="center">
+                    <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
+                    <br />
+                    <br />
+                    <p:rating value='#{dishController.selected.userId.userRating}' stars="5"/>
+                </div>
             <ui:repeat value="#{commentsController.getCommentsList()}" var="comment">
                 <p:remoteCommand name="upvote#{comment.id}" action="#{commentsController.upvote(comment.id)}" update=":growl"/>
                 <p:remoteCommand name="downvote#{comment.id}" action="#{commentsController.downvote(comment.id)}" update=":growl" />

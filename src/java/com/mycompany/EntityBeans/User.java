@@ -325,7 +325,7 @@ public class User implements Serializable {
         return (int)userRating;
     }
 
-    public void setUserRating(double userRating) {
+    public void setUserRating(int userRating) {
         this.userRating = userRating;
     }
 
