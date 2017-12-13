@@ -109,6 +109,10 @@ public class DishController implements Serializable {
         }
         return items;
     }
+    
+//    public List<Dish> findAll() {
+//        List<Dish> dishes = (List<Dish>) 
+//    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

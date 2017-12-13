@@ -98,10 +98,11 @@ public class LoginManager implements Serializable {
     Sign in the user if the entered username and password are valid
     @return "" if an error occurs; otherwise, redirect to show the Profile page
      */
-    public String loginUser() throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String loginUser() {
 
         // Obtain the object reference of the User object from the entered username
-        User user = getUserFacade().findByUsername(getUsername());
+        User user;
+        user = getUserFacade().findByUsername(getUsername());
 
         if (user == null) {
             errorMessage = "Entered username " + getUsername() + " does not exist!";
@@ -112,7 +113,13 @@ public class LoginManager implements Serializable {
             String enteredUsername = getUsername();
 
             String actualPassword = user.getPassword();
-            boolean isPasswordMatched = PasswordHashingManager.validatePassword(getPassword(), actualPassword);
+            boolean isPasswordMatched = false;
+            try {
+                isPasswordMatched = PasswordHashingManager.validatePassword(getPassword(), actualPassword);
+            }
+            catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                isPasswordMatched = false;
+            }
             
             if (!actualUsername.equals(enteredUsername)) {
                 errorMessage = "Invalid Username!";
