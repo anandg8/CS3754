@@ -5,13 +5,10 @@
 package com.mycompany.FacadeBeans;
 
 import com.mycompany.EntityBeans.Dish;
-import java.math.BigInteger;
-import java.sql.Statement;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -58,7 +55,6 @@ public class DishFacade extends AbstractFacade<Dish> {
                 .setParameter(1, userid)
                 .setParameter(2, dishid)
                 .getSingleResult()).intValue();
-        //System.out.println("count is: " + count + "\n userid is:" +userid + "\n dish is: " + dishid);
         return count == 1;        
             
     }
@@ -99,6 +95,13 @@ public class DishFacade extends AbstractFacade<Dish> {
                 .getResultList();
         
         return userDishList;
+    }
+    
+    public int getCommentsConjunctionID(int dishid) {
+        int id = ((Integer)getEntityManager().createNativeQuery("SELECT comments_id FROM dish WHERE id = ?")
+                .setParameter(1, dishid)
+                .getSingleResult());
+        return id;
     }
     
 }

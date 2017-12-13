@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+        
+        <ui:define name="css">
+            <link rel="stylesheet" href="/CookToShare/resources/css/bootstrap.css" />
+        </ui:define>
+        <ui:define name="js">
+            <h:outputScript library="js" name="bootstrap.js"/>
+            <h:outputScript library="js" name="bootstrap.min.js"/>
+            <h:outputScript library="js" name="jquery.js"/>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDishTitle}"></h:outputText>
+            
+        </ui:define>
+
+        <ui:define name="editableContent">
+            <p:growl id="growl" life="5000" />
+            <h:form>
+            <ui:repeat value="#{commentsController.getCommentsList()}" var="comment">
+                <p:remoteCommand name="upvote#{comment.id}" action="#{commentsController.upvote(comment.id)}" update=":growl"/>
+                <p:remoteCommand name="downvote#{comment.id}" action="#{commentsController.downvote(comment.id)}" update=":growl" />
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-1">
+                                <p:commandButton class="btn btn-sm btn-success" type="button" onclick="upvote#{comment.id}()" value="Upvote" />                            
+                        </div>
+                        <br />
+                        <div class="col-lg-3">
+                            <h:outputText value="Username: #{comment.userId.username}" />
+                            <br />
+                            <br />
+                            <h:outputText value="Posted on: #{comment.datePosted}" />
+                            <br />
+                            <br />
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                        <div class="row">
+                            <div class="col-lg-1 text-center">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        #{commentsController.getScore(comment.id)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-11">
+                                #{comment.comment}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <p:commandButton class="btn btn-sm btn-danger" type="button" onclick="downvote#{comment.id}()" value="Downvote" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+            </ui:repeat>
+                <p:inputTextarea value="#{commentsController.comment}" class="form-control" placeholder="Type your reply here"/>
+                <p:commandButton class="btn btn-lg btn-success" value="Submit Reply" action="#{commentsController.submitReply()}" update=":growl" />
+            </h:form>
+        </ui:define>
+        
+    </ui:composition>
+
+</html>

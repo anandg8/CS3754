@@ -5,7 +5,10 @@
 package com.mycompany.EntityBeans;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Comments.findByReplyId", query = "SELECT c FROM Comments c WHERE c.replyId = :replyId")
     , @NamedQuery(name = "Comments.findByDatePosted", query = "SELECT c FROM Comments c WHERE c.datePosted = :datePosted")
     , @NamedQuery(name = "Comments.findByIsVisible", query = "SELECT c FROM Comments c WHERE c.isVisible = :isVisible")
-    , @NamedQuery(name = "Comments.findByVoteId", query = "SELECT c FROM Comments c WHERE c.voteId = :voteId")
     , @NamedQuery(name = "Comments.findByComment", query = "SELECT c FROM Comments c WHERE c.comment = :comment")})
 public class Comments implements Serializable {
 
@@ -59,10 +61,7 @@ public class Comments implements Serializable {
     @NotNull
     @Column(name = "is_visible")
     private int isVisible;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "vote_id")
-    private int voteId;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
@@ -82,12 +81,12 @@ public class Comments implements Serializable {
         this.id = id;
     }
 
-    public Comments(Integer id, int replyId, Date datePosted, int isVisible, int voteId, String comment) {
+    
+    public Comments(Integer id, int replyId, Date datePosted, int isVisible, String comment) {
         this.id = id;
         this.replyId = replyId;
         this.datePosted = datePosted;
         this.isVisible = isVisible;
-        this.voteId = voteId;
         this.comment = comment;
     }
 
@@ -107,8 +106,10 @@ public class Comments implements Serializable {
         this.replyId = replyId;
     }
 
-    public Date getDatePosted() {
-        return datePosted;
+    public String getDatePosted() {
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/YY");
+        String s = df.format(datePosted);
+        return s;
     }
 
     public void setDatePosted(Date datePosted) {
@@ -123,13 +124,6 @@ public class Comments implements Serializable {
         this.isVisible = isVisible;
     }
 
-    public int getVoteId() {
-        return voteId;
-    }
-
-    public void setVoteId(int voteId) {
-        this.voteId = voteId;
-    }
 
     public String getComment() {
         return comment;

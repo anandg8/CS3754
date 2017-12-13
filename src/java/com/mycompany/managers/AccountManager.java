@@ -297,6 +297,13 @@ public class AccountManager implements Serializable {
         return userFacade;
     }
     
+    
+    public String getBoard() {
+        String x = "<div class=\"well\"><div class='row'><div class='col-lg-1'><button class='btn btn-sm btn-success'>upvote </button></div><div class='col-lg-3'>Username goes here</div><br /><br /><div class='row'><div class='col-lg-1 text-center'><div class='panel panel-default'><div clas='panel-body'>10</div></div></div><div class='col-lg-11'>Reply Text goes here</div></div><div class='row'><div class='col-lg-1'><button class='btn btn-sm btn-danger'> Downvote</button></div><div class='col-lg-1'><button>Reply</button></div></div></div><br /></div>";
+        return x;
+            
+    }
+    
     public UserPhotoFacade getUserPhotoFacade() {
         return userPhotoFacade;
     }
@@ -454,9 +461,9 @@ public class AccountManager implements Serializable {
                 }
                 
                 newUser.setUserRating(5.0);
-                getUserFacade().createCreditAccount(newUser.getId());
+//                getUserFacade().createCreditAccount(newUser.getId());
                 getUserFacade().create(newUser);
-
+                
             } catch (EJBException e) {
                 username = "";
                 statusMessage = "Something went wrong while creating user's account! See: " + e.getMessage();
@@ -465,6 +472,7 @@ public class AccountManager implements Serializable {
             }
             // Initialize the session map for the newly created User object (see the method below)
             initializeSessionMap();
+            getUserFacade().createCreditAccount(getUserFacade().findByUsername(getUsername()).getId());
 
             /*
             The Profile page cannot be shown since the new User has not signed in yet.

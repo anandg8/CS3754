@@ -38,7 +38,7 @@
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
-                        <p:commandButton value="Rate and Review" actionListener="#{dishController.rateAndReview()}" onclick="PF('DishViewDialogPastReservations').hide()" update=":growl" />
+                        <p:commandButton value="Rate and Review" action="#{dishController.rateAndReview()}" ajax="false" onclick="PF('DishViewDialogPastReservations').hide()" update=":growl" />
                     </h:panelGroup>
                 </div>
             </h:form>

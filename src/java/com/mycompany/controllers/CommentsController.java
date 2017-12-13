@@ -4,6 +4,7 @@ import com.mycompany.EntityBeans.Comments;
 import com.mycompany.controllers.util.JsfUtil;
 import com.mycompany.controllers.util.JsfUtil.PersistAction;
 import com.mycompany.FacadeBeans.CommentsFacade;
+import com.mycompany.managers.AccountManager;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("commentsController")
 @SessionScoped
@@ -27,6 +29,13 @@ public class CommentsController implements Serializable {
     private com.mycompany.FacadeBeans.CommentsFacade ejbFacade;
     private List<Comments> items = null;
     private Comments selected;
+    private String comment;
+    
+    @Inject
+    private DishController dishController;
+    
+    @Inject
+    private AccountManager accountManager;
 
     public CommentsController() {
     }
@@ -47,6 +56,56 @@ public class CommentsController implements Serializable {
 
     private CommentsFacade getFacade() {
         return ejbFacade;
+    }
+    
+    public void setComment(String c){
+        this.comment = c;
+    }
+    
+    public String getComment() {
+        return this.comment;
+    }
+    
+    
+    public String submitReply() {
+        System.out.println("reply is: " + this.comment);
+        if (this.comment != null && this.comment.trim().length() > 0) {
+            getFacade().submitComment(accountManager.getSelected().getId(), dishController.getCommentsConjunctionID(), this.comment);
+            this.comment = null;
+            return "RateForumBoard.xhtml?faces-redirect=true";
+        } else {
+            JsfUtil.addErrorMessage("Comment was left blank");   
+        }
+        return "";
+    }
+    
+    public String upvote(int id) {
+        if (getFacade().didUserVote(accountManager.getSelected().getId(), id)) {
+            JsfUtil.addErrorMessage("You already voted for this comment!");
+        } else {
+            getFacade().userUpvote(accountManager.getSelected().getId(), id, dishController.getSelected().getId());
+            return "RateForumBoard.xhtml?faces-redirect=true";
+        }
+        return "";
+    }
+    
+    public String downvote(int id) {
+        if (getFacade().didUserVote(accountManager.getSelected().getId(), id)) {
+            JsfUtil.addErrorMessage("You already voted for this comment!");
+        } else {
+            getFacade().userUpvote(accountManager.getSelected().getId(), id, dishController.getSelected().getId());
+            return "RateForumBoard.xhtml?faces-redirect=true";
+        }
+        return "";
+    }
+    
+    public List<Comments> getCommentsList() {
+        items = getFacade().getCommentsRecursively(dishController.getCommentsConjunctionID()); //get a list of all the comments for a certain dish
+        return items;
+    }
+    
+    public int getScore(int id) {
+        return getFacade().getScore(id);
     }
 
     public Comments prepareCreate() {

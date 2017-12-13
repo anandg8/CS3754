@@ -78,6 +78,11 @@ public class DishController implements Serializable {
         return false;
     }
 
+    public String rateAndReview() {
+        
+        return "RateForumBoard.xhtml?faces-redirect=true";
+    }
+    
     public Dish prepareCreate() {
         selected = new Dish();
         initializeEmbeddableKey();
@@ -189,10 +194,10 @@ public class DishController implements Serializable {
         getFacade().unreserveDish(selected.getId(), accountManager.getSelected().getId());
         JsfUtil.addSuccessMessage("Refunding your money...");
         accountManager.creditTransferFromTo(selected.getUserId().getId(), accountManager.getSelected().getId(), (int)selected.getCost());
-        //refund funds
-        //take the account associated with the dish and subtract cost of dish
-        //transfer the credit to current user
-        
+    }
+
+    int getCommentsConjunctionID() {
+        return getFacade().getCommentsConjunctionID(selected.getId());
     }
 
     @FacesConverter(forClass = Dish.class)
