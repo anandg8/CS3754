@@ -24,16 +24,26 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
                         <c:if test="#{accountManager.isLoggedIn() == true}"> 
-                            
+
                             <p:ajax event="rowSelect"   update="createButton viewButton"/>
                             <p:ajax event="rowUnselect" update="createButton viewButton"/>
                         </c:if>
                         <c:otherwise>
-                                <p:ajax event="rowSelect"   update="viewButton"/>
-                                <p:ajax event="rowUnselect" update="viewButton"/>
+                            <p:ajax event="rowSelect"   update="viewButton"/>
+                            <p:ajax event="rowUnselect" update="viewButton"/>
                         </c:otherwise>
-                        
 
+                        <p:column exportable="false" style="width:85px;">
+                            <f:facet name="header">
+                                <h:outputText value="Picture" styleClass="facetHeader"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:graphicImage value="#{item.dishPicturePath}"
+                                                width="100px" height="100px" />
+                            </div>
+                        </p:column>
+
+                        <!---
                         <p:column style="width: 150px">
                             <f:facet name="header">
                                 <h:outputText value="Picture"/>
@@ -42,6 +52,7 @@
                                 <img src="#{item.dishPicturePath}" width="100px" height="100px" />
                             </div>
                         </p:column>
+                        -->
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDishTitle_description}"/>
@@ -50,7 +61,7 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Cusine"/>
+                                <h:outputText value="Cuisine"/>
                             </f:facet>
                             <h:outputText value="#{item.cuisineId.name}" />
                         </p:column>

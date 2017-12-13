@@ -12,21 +12,22 @@
             <h:form id="DishCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dishController.selected != null}">
+
                         <p:outputLabel value="#{bundle.CreateDishLabel_name}" for="name" />
                         <p:inputText id="name" value="#{dishController.selected.dishName}" title="#{bundle.CreateDishTitle_name}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_name}"/>
-                        
+
                         <p:outputLabel value="#{bundle.CreateDishLabel_description}" for="description" />
                         <p:inputTextarea rows="4" cols="30" id="description" value="#{dishController.selected.description}" title="#{bundle.CreateDishTitle_description}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_description}"/>
-                        
+
                         <p:outputLabel value="#{bundle.CreateDishLabel_reservationTime}" for="reservationTime" />
                         <p:calendar id="reservationTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{dishController.selected.reservationTime}" title="#{bundle.EditDishTitle_reservationTime}" required="true" requiredMessage="#{bundle.EditDishRequiredMessage_reservationTime}" showOn="button"/>
-                        
+
                         <p:outputLabel value="#{bundle.CreateDishLabel_mealTime}" for="mealTime" />
                         <p:calendar id="mealTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{dishController.selected.mealTime}" title="#{bundle.EditDishTitle_mealTime}" required="true" requiredMessage="#{bundle.EditDishRequiredMessage_mealTime}" showOn="button"/>
-                        
+
                         <p:outputLabel value="#{bundle.CreateDishLabel_cost}" for="cost" />
                         <p:inputText id="cost" value="#{dishController.selected.cost}" title="#{bundle.CreateDishTitle_cost}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_cost}"/>
-                        
+
                         <p:outputLabel value="#{bundle.CreateDishLabel_numGuests}" for="numGuests" />
                         <p:inputText id="numGuests" value="#{dishController.selected.numGuests}" title="#{bundle.CreateDishTitle_numGuests}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_numGuests}"/>
 
@@ -38,7 +39,12 @@
                                            itemValue="#{cuisineIdItem}"/>
                         </p:selectOneMenu>
 
+                        <p:outputLabel value="Dish Image URL:" for="dishPicturePath" />
+                        <p:inputText id="dishPicturePath" value="#{dishController.selected.dishPicturePath}"
+                                     title="Dish Image URL" required="true" requiredMessage="The Dish Image URL Field is required."/>
+                        
                     </p:panelGrid>
+                    
                     <p:commandButton actionListener="#{dishController.create}" value="#{bundle.Save}" update="display,:DishListForm:datalist,:growl" oncomplete="handleSubmit(args,'DishCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PF('DishCreateDialog').hide()" type="button"/>
                 </h:panelGroup>

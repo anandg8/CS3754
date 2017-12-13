@@ -11,3 +11,4 @@ web.xml
 dist/
 Constants.java
 web/WEB-INF/glassfish-web.xml
+web/WEB-INF/*
