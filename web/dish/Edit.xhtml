@@ -35,6 +35,10 @@
                                            itemLabel ="#{cuisineIdItem.name}"
                                            itemValue="#{cuisineIdItem}"/>
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Dish Image URL:" for="dishPicturePath" />
+                        <p:inputText id="dishPicturePath" value="#{dishController.selected.dishPicturePath}"
+                                     title="Dish Image URL" required="true" requiredMessage="The Dish Image URL Field is required."/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{dishController.update}" value="#{bundle.Save}" update="display,:DishListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DishEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PF('DishEditDialog').hide()"/>

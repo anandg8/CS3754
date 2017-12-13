@@ -23,7 +23,7 @@
                     <h:panelGroup id="display" rendered="#{dishController.selected != null}">
                         <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
                         <br />
-                        <br />
+
                         <p:rating value='#{dishController.selected.userId.userRating}' stars="5" readonly="true" />
                          <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
                              <h:outputText value="Spots Available" />
@@ -45,7 +45,7 @@
                             <c:if test="#{dishController.isGuest() == true}">
                                 <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
                             </c:if>
-                            <c:if test="#{dishController.isGuest() == false}">
+                            <c:if test="#{dishController.isGuest() == false &amp;&amp; dishController.hasEnoughCredits() == true}">
                                 <p:commandButton  value="Pay and Reserve" actionListener="#{dishController.reserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl"/>
                             </c:if>
                         </c:if>

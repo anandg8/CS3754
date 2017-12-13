@@ -55,7 +55,7 @@ public class Dish implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 255)
     @Column(name = "dish_name")
     private String dishName;
     @Basic(optional = false)
@@ -66,7 +66,7 @@ public class Dish implements Serializable {
     private String description;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 255)
     @Column(name = "dish_picture_path")
     private String dishPicturePath;
     @Basic(optional = false)
