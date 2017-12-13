@@ -3,9 +3,11 @@
  * Copyright © 2017 Dong Gyu Lee. All rights reserved. * 
  */
 package com.mycompany.managers;
+import com.mycompany.EntityBeans.Dish;
 import com.mycompany.EntityBeans.User;
 import com.mycompany.managers.AccountManager;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
@@ -80,7 +82,7 @@ public class MapManager implements Serializable {
         mapModel.addOverlay(new Marker(coord1, "Current User"));
     }
   
-    public MapModel getMapModel(User currentUser) {
+    public MapModel getMapModel(User currentUser, List<Dish> dishes) {
         String location = currentUser.getLocation();
         String[] locationArray = location.split(",");
 
@@ -91,6 +93,25 @@ public class MapManager implements Serializable {
             mapModel.addOverlay(new Marker(coord1, currentUser.getUsername()));
         }
         
+        
+//        Dish dish = dishes.get(0);
+//        User tempUser = dish.getUserId();
+//        String[] userLocationArray = tempUser.getLocation().split(",");
+//        if (userLocationArray.length > 0) {
+//            LatLng tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), Double.parseDouble(userLocationArray[1]));
+//            mapModel.addOverlay(new Marker(tempCoord, tempUser.getUsername(), dish.getDishName()));
+//        }
+        for (int i = 0; i < dishes.size(); i++) {
+            Dish dish = dishes.get(i);
+            User tempUser = dish.getUserId();
+            String[] userLocationArray = tempUser.getLocation().split(",");
+            if (userLocationArray.length > 0) {
+                LatLng tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), Double.parseDouble(userLocationArray[1]));
+
+                mapModel.addOverlay(new Marker(tempCoord, tempUser.getUsername(), dish, "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
+            }
+            
+        }
         return mapModel;
     }
     

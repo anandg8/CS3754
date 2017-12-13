@@ -7,6 +7,9 @@ build/
 persistence.xml
 faces-config.xml
 glassfish-resources.xml
+web/WEB-INF/faces-config.xml
+web/WEB-INF/glassfish-resources.xml
+web/WEB-INF/web.xml
 web.xml
 dist/
 Constants.java

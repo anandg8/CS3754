@@ -8,6 +8,8 @@ package com.mycompany.managers;
 import com.mycompany.EntityBeans.User;
 import com.mycompany.FacadeBeans.UserFacade;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -99,7 +101,8 @@ public class LoginManager implements Serializable {
     public String loginUser() {
 
         // Obtain the object reference of the User object from the entered username
-        User user = getUserFacade().findByUsername(getUsername());
+        User user;
+        user = getUserFacade().findByUsername(getUsername());
 
         if (user == null) {
             errorMessage = "Entered username " + getUsername() + " does not exist!";
@@ -110,14 +113,20 @@ public class LoginManager implements Serializable {
             String enteredUsername = getUsername();
 
             String actualPassword = user.getPassword();
-            String enteredPassword = getPassword();
-
+            boolean isPasswordMatched = false;
+            try {
+                isPasswordMatched = PasswordHashingManager.validatePassword(getPassword(), actualPassword);
+            }
+            catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                isPasswordMatched = false;
+            }
+            
             if (!actualUsername.equals(enteredUsername)) {
                 errorMessage = "Invalid Username!";
                 return "";
             }
 
-            if (!actualPassword.equals(enteredPassword)) {
+            if (!isPasswordMatched) {
                 errorMessage = "Invalid Password!";
                 return "";
             }

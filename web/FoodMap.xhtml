@@ -8,7 +8,8 @@ Copyright © 2017 Dong Gyu Lee. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -38,14 +39,28 @@ Copyright © 2017 Dong Gyu Lee. All rights reserved.
             This is given in siteTemplate.xhtml so that each page can use Google Maps JavaScript API. 
             *************************************************************************************************
             -->
-            <p:gmap center="#{accountManager.selected.location}" zoom="15" type="HYBRID" class="map" model="#{mapManager.getMapModel(accountManager.selected)}">
+            <p:gmap center="#{accountManager.selected.location}" zoom="15" type="HYBRID" class="map" 
+                    model="#{mapManager.getMapModel(accountManager.selected, dishController.items)}">
                 <p:ajax event="overlaySelect" listener="#{mapManager.onMarkerSelect}" />
                 <p:gmapInfoWindow id="mapManager">
-                    <p:outputPanel style="text-align: center; display: block; margin: auto">
-                        <!--
-                        <p:graphicImage name="http://www.seriouseats.com/recipes/assets_c/2015/04/20140328-general-tsos-chicken-recipe-food-lab-1-thumb-1500xauto-422309.jpg" height="150" />
-                        <br />-->
+                    <p:outputPanel style="text-align: left; display: block; margin: auto">
+                        
                         <h:outputText value="User: #{mapManager.marker.title}" />
+<!--                        <script>
+                        console.log("#{accountManager.selected.username}\n");
+                        console.log("#{mapManager.marker.data.userId.username == null}\n");
+                        </script>-->
+                        <c:if test="#{mapManager.marker.data.userId.username != null}">                        
+                            <br/>
+                            <h:outputText value="Dish: #{mapManager.marker.data.dishName}" />
+                            <br/>
+                            <h:outputText value="Email: #{mapManager.marker.data.userId.email}" />
+                            <br/>
+                            <h:outputText value="Address: #{mapManager.marker.data.userId.address}" />
+                            <br/>
+                            <p:graphicImage value = "#{mapManager.marker.data.dishPicturePath}" url="#{mapManager.marker.data.dishPicturePath}" height="150" width ="150" />
+                            <br />
+                        </c:if>
                     </p:outputPanel>
                 </p:gmapInfoWindow>
                 

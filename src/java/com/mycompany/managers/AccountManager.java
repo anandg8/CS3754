@@ -27,6 +27,8 @@ import javax.inject.Named;
 import java.util.Date;
 import java.net.*;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import org.primefaces.json.JSONObject;
 
 /*
@@ -383,7 +385,7 @@ public class AccountManager implements Serializable {
     Create a new user account. Return "" if an error occurs; otherwise,
     upon successful account creation, redirect to show the SignIn page.
      */
-    public String createAccount() {
+    public String createAccount() throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         //-----------------------------------------------------------
         // First, check if the entered username is already being used
@@ -420,7 +422,8 @@ public class AccountManager implements Serializable {
                 newUser.setSecurityAnswer(securityAnswer);
                 newUser.setEmail(email);
                 newUser.setUsername(username);
-                newUser.setPassword(password);
+                String securedPassword = PasswordHashingManager.generateStrongPasswordHash(password);
+                newUser.setPassword(securedPassword);
                 
                 /*
                 private int userPermission;

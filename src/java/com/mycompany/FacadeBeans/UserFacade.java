@@ -73,8 +73,15 @@ public class UserFacade extends AbstractFacade<User> {
     public int getCredits(int id) {
         Query q = em.createNativeQuery("SELECT credits_available FROM user_credits WHERE user_id = ?");
         q.setParameter(1, "" + id);
-        Integer d = (Integer) q.getSingleResult();
-        return d.intValue();
+        int credit;
+        try {
+            Integer d = (Integer) q.getSingleResult();
+            credit = d.intValue();
+        }
+        catch (Exception e) {
+            credit = 0;
+        }
+        return credit;
     }
 
     public void createCreditAccount(Integer id) {

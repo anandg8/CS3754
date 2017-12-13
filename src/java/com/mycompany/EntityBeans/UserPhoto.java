@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class UserPhoto implements Serializable {
 
+//    @Column(name = "user_id")
+//    private Integer userId;
+
     /*
     ========================================================
     Instance variables representing the attributes (columns)
@@ -200,5 +203,13 @@ public class UserPhoto implements Serializable {
     public String getTemporaryFilePath() {
         return Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file";
     }
+
+//    public Integer getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Integer userId) {
+//        this.userId = userId;
+//    }
 
 }
