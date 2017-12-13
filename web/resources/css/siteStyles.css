@@ -516,7 +516,6 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
 }
 
 #footer{
-    display: none;
     position: absolute;
     left: 0;
     bottom: 0;
