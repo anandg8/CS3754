@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 
 @Named("dishController")
 @SessionScoped
@@ -57,15 +58,24 @@ public class DishController implements Serializable {
     
     public List<Dish> getCurrentReservations() {
         return getFacade().findCurrentReservationsByUser(accountManager.getSelected().getId());
+
     }
     
     public List<Dish> getPastReservations() {
-        return getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
+        List<Dish> temp = getFacade().findPastReservationsByUser(accountManager.getSelected().getId());
+        return temp;
     }
     
     public List<Dish> getCurrentUserDishes()
     {
         return getFacade().findCurrentUserDishes(accountManager.getSelected().getId());
+    }
+    
+    public boolean hasEnoughCredits() {
+        if (selected != null) {
+            return selected.getCost() < accountManager.getNumberOfCreditsAvailable();
+        }
+        return false;
     }
 
     public Dish prepareCreate() {
@@ -134,7 +144,7 @@ public class DishController implements Serializable {
     }
     
     public int getAvailability() {
-        if (selected == null) 
+        if (selected == null || selected.getId() == null) 
         {
             return 0;
         }
@@ -149,13 +159,12 @@ public class DishController implements Serializable {
         return 0;
     }
     
-    public boolean isGuest()
-    {
-        if (selected == null || accountManager.getSelected() == null) {
-            System.out.println("Selected is null!");
+    public boolean isGuest() {
+        if (selected == null || accountManager.getSelected() == null || selected.getId() == null) {
             return true;
         }
         return getFacade().isGuest(accountManager.getSelected().getId(), selected.getId());
+
     }
 
     public Dish getDish(java.lang.Integer id) {
@@ -173,13 +182,17 @@ public class DishController implements Serializable {
     public void reserveDish() {
         getFacade().reserveDish(selected.getId(), accountManager.getSelected().getId());
         JsfUtil.addSuccessMessage("Dish has been reserved!");
-        //transfer funds
+        accountManager.creditTransferFromTo(accountManager.getSelected().getId(), selected.getUserId().getId(), (int)selected.getCost());
     }
     
     public void unreserveDish() {
         getFacade().unreserveDish(selected.getId(), accountManager.getSelected().getId());
         JsfUtil.addSuccessMessage("Refunding your money...");
+        accountManager.creditTransferFromTo(selected.getUserId().getId(), accountManager.getSelected().getId(), (int)selected.getCost());
         //refund funds
+        //take the account associated with the dish and subtract cost of dish
+        //transfer the credit to current user
+        
     }
 
     @FacesConverter(forClass = Dish.class)

@@ -179,16 +179,6 @@ Style the div component whose unique id is "footer" per reference
 Vertical Navigation Menu
 ========================
 */
-/* Style class for <ul> */
-.verticalMenu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 180px;
-    background-color: #F0FFFF; /* Azure */
-    border: 1px solid #555;
-
-}
 
 /* Style class for <li> */
 .verticalMenuItem {
@@ -196,12 +186,23 @@ Vertical Navigation Menu
     border-bottom: 1px solid #555;
 }
 
-/* Style class for <li> and the <a> tag that defines a hyperlink */
-.verticalMenuItem a {
-    display: block;
-    color: black;
-    padding: 8px 16px;
-    text-decoration: none;  /* Do not underline the hyperlink */
+/* Style the Google map display */
+.map {
+    margin-left: 10px;
+    margin-right: 40px;
+    height:600px;
+}
+
+/* 
+Place the logo image on the left top corner per reference
+<h:panelGrid columns="2" columnClasses="leftTopCornerAlign, rightTopCornerAlign">
+in headerTemplate.xhtml
+*/
+.leftTopCornerAlign {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 7px;
 }
 
 /* Style class for <ul>, <li> and <a> hyperlink tag */

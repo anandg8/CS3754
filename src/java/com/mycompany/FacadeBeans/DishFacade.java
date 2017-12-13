@@ -58,7 +58,7 @@ public class DishFacade extends AbstractFacade<Dish> {
                 .setParameter(1, userid)
                 .setParameter(2, dishid)
                 .getSingleResult()).intValue();
-        System.out.println("count is: " + count + "\n userid is:" +userid + "\n dish is: " + dishid);
+        //System.out.println("count is: " + count + "\n userid is:" +userid + "\n dish is: " + dishid);
         return count == 1;        
             
     }

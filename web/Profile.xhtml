@@ -76,7 +76,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                                 
                                 <li class="verticalMenuItem">
 
-                                    <h:link outcome="reservations/View">
+                                    <h:link outcome="/reservations/List">
                                         <i class="fa fa-history">&nbsp;</i>Past Reservations
                                     </h:link>
                                 </li>
@@ -128,6 +128,13 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                                 </li>
 
                                 <li class="verticalMenuItem">
+
+                                    <h:link outcome="reservations/List">
+                                        <i class="fa fa-history">&nbsp;</i>Past Reservations
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem">
                                     <!-- SIGN OUT -->
                                     <h:commandLink action="#{accountManager.logout()}">
                                         <i class="fa fa-sign-out">&nbsp;</i>Sign Out
@@ -172,6 +179,9 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
 
                                 <h:outputText value="#{bundle.ViewUserLabel_username}"/>
                                 <h:outputText value="#{accountManager.selected.username}" />
+                                
+                                <h:outputText value="#{bundle.ViewUserLabel_credits}" />
+                                <h:outputText value="#{accountManager.numberOfCreditsAvailable}" />
 
                             </p:panelGrid>
 

@@ -1,3 +1,4 @@
+glassfish-web.xml
 lib/
 nbproject/
 src/conf/MANIFEST.MF
@@ -9,3 +10,4 @@ glassfish-resources.xml
 web.xml
 dist/
 Constants.java
+web/WEB-INF/glassfish-web.xml
