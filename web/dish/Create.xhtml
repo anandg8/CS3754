@@ -12,6 +12,7 @@
             <h:form id="DishCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dishController.selected != null}">
+        
                         <p:outputLabel value="#{bundle.CreateDishLabel_name}" for="name" />
                         <p:inputText id="name" value="#{dishController.selected.dishName}" title="#{bundle.CreateDishTitle_name}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_name}"/>
                         
@@ -37,6 +38,8 @@
                                            itemLabel ="#{cuisineIdItem.name}"
                                            itemValue="#{cuisineIdItem}"/>
                         </p:selectOneMenu>
+                        
+                        <p:commandButton id="viewButton" class ="fa fa-picture-o" value="Upload Dish Picture"/>
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{dishController.create}" value="#{bundle.Save}" update="display,:DishListForm:datalist,:growl" oncomplete="handleSubmit(args,'DishCreateDialog');"/>

@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Anand Guruswamy on 2017.11.21  * 
+ * Copyright © 2017 Anand Guruswamy. All rights reserved. * 
  */
 package com.mycompany.FacadeBeans;
 
@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author amitd
+ * @author Anand
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> {
