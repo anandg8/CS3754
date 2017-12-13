@@ -417,8 +417,7 @@ public class AccountManager implements Serializable {
                 newUser.setUsername(username);
                 
                 String securedPassword = PasswordHashingManager.generateStrongPasswordHash(password);
-                password = securedPassword;
-                newUser.setPassword(password);
+                newUser.setPassword(securedPassword);
                 
                 /*
                 private int userPermission;
