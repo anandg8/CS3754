@@ -112,8 +112,7 @@ public class LoginManager implements Serializable {
             String enteredUsername = getUsername();
 
             String actualPassword = user.getPassword();
-            boolean isPasswordMatched = PasswordHashingManager.validatePassword(actualPassword, getPassword());
-            String enteredPassword = getPassword();
+            boolean isPasswordMatched = PasswordHashingManager.validatePassword(getPassword(), actualPassword);
 
             if (!actualUsername.equals(enteredUsername)) {
                 errorMessage = "Invalid Username!";
