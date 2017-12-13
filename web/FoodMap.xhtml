@@ -40,7 +40,8 @@ Copyright © 2017 Dong Gyu Lee. All rights reserved.
             *************************************************************************************************
             -->
             <p:gmap center="#{accountManager.selected.location}" zoom="15" type="HYBRID" class="map" 
-                    model="#{mapManager.getMapModel(accountManager.selected, dishController.items)}">
+                    model="#{mapManager.getMapModel(accountManager.selected, dishController.items)}"
+                    style="width: 100%; height: 500px">
                 <p:ajax event="overlaySelect" listener="#{mapManager.onMarkerSelect}" />
                 <p:gmapInfoWindow id="mapManager">
                     <p:outputPanel style="text-align: left; display: block; margin: auto">
