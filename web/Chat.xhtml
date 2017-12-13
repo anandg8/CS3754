@@ -7,33 +7,42 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      >
-    <h:head>
-        <title>Chat test!</title>
-    </h:head>
-    <script type="text/javascript">
-        setInterval("nextMessage()", 1000); //update the chart every 1000 ms               
-         
-        function updateMessages(xhr, status, args) {
-            if(!args.ok) return;
-            $('#chat').append('<div class="msg">[' +args.dateSent+ '] <strong>'+args.user+'</strong>: '+args.text+'</div>');
-        }
-         
-    </script>
-    <h:body>
-        <h:form prependId="false">
-            <h:panelGrid columns="2">
-                Name: <p:inputText value="#{messageBean.message.user}"/>
-                Text: <p:inputText value="#{messageBean.message.message}"/>
-                <p:commandButton type="reset" value="Clear"/>
-                <p:commandButton value="Send!" actionListener="#{messageBean.sendMessage}"/>
-            </h:panelGrid>
- 
-            <p:remoteCommand name="nextMessage" actionListener="#{messageBean.firstUnreadMessage}"
-                             oncomplete="updateMessages(xhr, status, args);"/>
-        </h:form>
-        <hr/>
-        <h3>Live chat</h3>
-        <div id="chat"></div>
-    </h:body>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Chat!"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="editableContent">
+                <script type="text/javascript">
+                    setInterval("nextMessage()", 1000); //update the chart every 1000 ms               
+
+                    function updateMessages(xhr, status, args) {
+                        if(!args.ok) return;
+                        $('#chat').append('<div class="msg">[' +args.dateSent+ '] <strong>'+args.user+'</strong>: '+args.text+'</div>');
+                    }
+
+                </script>
+                <h:body>
+                    <h:form prependId="false">
+                        <h:panelGrid columns="2">
+                            Name: <p:inputText value="#{messageBean.message.user}"/>
+                            Text: <p:inputText value="#{messageBean.message.message}"/>
+                            <p:commandButton type="reset" value="Clear"/>
+                            <p:commandButton value="Send!" actionListener="#{messageBean.sendMessage}"/>
+                        </h:panelGrid>
+
+                        <p:remoteCommand name="nextMessage" actionListener="#{messageBean.firstUnreadMessage}"
+                                         oncomplete="updateMessages(xhr, status, args);"/>
+                    </h:form>
+                    <hr/>
+                    <h3>Live chat</h3>
+                    <div id="chatpage"></div>
+                </h:body>
+        </ui:define>
+        
+    </ui:composition>
 </html>

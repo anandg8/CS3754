@@ -135,6 +135,16 @@ Style the div component whose unique id is "page" per reference
     text-decoration: none;
     color: black;
 }
+
+#chatpage{
+    font-family: "Times New Roman", Times, Serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+    height: 1000px;
+}
 /* 
 Style the div component whose unique id is "header" per reference 
 <div id="header"> in siteTemplate.xhtml
