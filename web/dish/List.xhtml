@@ -42,6 +42,14 @@
                                                 width="100px" height="100px" />
                             </div>
                         </p:column>
+                        <p:column sortBy="#{item.dishName}">
+                            <div align="center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDishTitle_name}"/>
+                            </f:facet>
+                                <h:outputText value="#{item.dishName}"/>
+                            </div>
+                        </p:column>
                         <p:column>
                             <div align="center">
                             <f:facet name="header">

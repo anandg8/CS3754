@@ -35,6 +35,7 @@
                         <h:outputText value="#{bundle.ViewUserLabel_userRating}"/>
                         <h:outputText value="#{userController.selected.userRating}" title="#{bundle.ViewUserTitle_userRating}"/>
                     </p:panelGrid>
+                    <p:commandButton value="Rate and Review" action="#{dishController.rateAndReview()}" ajax="false" onclick="PF('UserViewDialog').hide()" update=":growl" />
                     <p:commandButton value="#{bundle.Close}" onclick="UserViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
