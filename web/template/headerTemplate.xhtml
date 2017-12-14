@@ -55,9 +55,9 @@ Copyright © 2017 Anand Guruswamy. All rights reserved.
                         -->
 
                         <!-- Clicking "Home" displays the index.xhtml file -->
-                        <h:link outcome="/index.html" styleClass="arialTen">
+                        <a href="/CookToShare/index.html" styleClass="arialTen">
                             <i class="fa fa-home">&nbsp;</i>Home
-                        </h:link>&nbsp;&nbsp;
+                        </a>&nbsp;&nbsp;
 
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">

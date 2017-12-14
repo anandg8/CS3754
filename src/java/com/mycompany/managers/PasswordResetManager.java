@@ -7,12 +7,16 @@ package com.mycompany.managers;
 
 import com.mycompany.EntityBeans.User;
 import com.mycompany.FacadeBeans.UserFacade;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
@@ -200,33 +204,42 @@ public class PasswordResetManager implements Serializable {
 
         if (message == null || message.isEmpty()) {
 
-            // Obtain the object reference of the User object with username
-            User user = getUserFacade().findByUsername(username);
-
             try {
-                // Reset User object's password
-                user.setPassword(password);
-
-                // Update the database
-                getUserFacade().edit(user);
-
-                // Initialize the instance variables
-                username = message = answer = password = "";
-
-            } catch (EJBException e) {
-                message = "Something went wrong while resetting your password, please try again!";
-
-                // Redirect to show the ResetPassword page
-                return "ResetPassword?faces-redirect=true";
+                
+                // Obtain the object reference of the User object with username
+                User user = getUserFacade().findByUsername(username);
+                
+                try {
+                    // Reset User object's password
+                    user.setPassword(password);
+                    
+                    // Update the database
+                    getUserFacade().edit(user);
+                    
+                    // Initialize the instance variables
+                    username = message = answer = password = "";
+                    
+                } catch (EJBException e) {
+                    message = "Something went wrong while resetting your password, please try again!";
+                    
+                    // Redirect to show the ResetPassword page
+                    return "ResetPassword?faces-redirect=true";
+                }
+                
+                // Redirect to show the index (Home) page
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                
+                ec.redirect("/CookToShare/index.html");
+                
+            } catch (IOException ex) {
+                Logger.getLogger(PasswordResetManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            // Redirect to show the index (Home) page
-            return "index.html?faces-redirect=true";
 
         } else {
             // Redirect to show the ResetPassword page
             return "ResetPassword?faces-redirect=true";
         }
+        return "";
     }
 
 }

@@ -29,6 +29,9 @@ import java.net.*;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.context.ExternalContext;
 import org.primefaces.json.JSONObject;
 
 /*
@@ -587,7 +590,7 @@ public class AccountManager implements Serializable {
             }
 
             logout();
-            return "index.html?faces-redirect=true";
+            //return "index.html?faces-redirect=true";
         }
         return "";
     }
@@ -846,8 +849,13 @@ public class AccountManager implements Serializable {
     }
 
     // Show the Home page
-    public String showHomePage() {
-        return "index.html?faces-redirect=true";
+    public void showHomePage() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect("/CookToShare/index.html");
+        } catch (IOException ex) {
+            Logger.getLogger(AccountManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Show the Profile page
@@ -855,9 +863,12 @@ public class AccountManager implements Serializable {
         return "Profile?faces-redirect=true";
     }
 
-    public String logout() {
+    public void logout() {
 
         // Clear the logged-in User's session map
+        
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
 
         // Reset the logged-in User's properties
@@ -870,8 +881,13 @@ public class AccountManager implements Serializable {
 
         // Invalidate the logged-in User's session
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        // Redirect to show the index (Home) page
-        return "/index.html?faces-redirect=true";
+        try {
+            // Redirect to show the index (Home) page
+            //return "/index.html?faces-redirect=true";
+            ec.redirect("/CookToShare/index.html");
+        } catch (IOException ex) {
+            Logger.getLogger(AccountManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public String userPhoto() {
 
