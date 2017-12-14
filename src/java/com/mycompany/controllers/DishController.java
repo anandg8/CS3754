@@ -8,6 +8,7 @@ import com.mycompany.managers.AccountManager;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,7 +80,7 @@ public class DishController implements Serializable {
 
     public String rateAndReview() {
         
-        return "RateForumBoard.xhtml?faces-redirect=true";
+        return "/reservations/RateForumBoard.xhtml?faces-redirect=true";
     }
     
     public Dish prepareCreate() {
@@ -165,11 +166,11 @@ public class DishController implements Serializable {
     }
     
     public double calculateDistance() {
-        /*
-            Get current user's location
-            Get dishes' location
-        */
-        return 0;
+        //placeholder for now
+        int max = 10;
+        int min = 1;
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
     
     public boolean isGuest() {
