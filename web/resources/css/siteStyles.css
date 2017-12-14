@@ -145,18 +145,19 @@ Style the div component whose unique id is "header" per reference
 <div id="header"> in siteTemplate.xhtml
 */
 #header {
-    background-color: white;   /* PowderBlue */
+background-color: white;
     width: 100%;
-    height: 84px;
+    height: 50px;
     padding: 15px;
-    padding-top: 25px;
-    margin-bottom: 10px;
-    padding-top: 40px;
+    margin-bottom: 3px;
+    top: 0;
+    padding-top: 0px;
     padding-bottom: 40px;
+    padding-right: 15px;
 }
 #header a{
     color: #e74c3c;
-    font-size: 22px;
+    font-size: 15px;
     font-weight: bold;
     margin-right: 15px;
 }
