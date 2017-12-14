@@ -50,7 +50,7 @@
                             <h:outputText value="#{item.description}"/>
                             </div>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.cuisineId.name}">
                             <div align="center">
                             <f:facet name="header">
                                 <h:outputText value="Cuisine"/>
@@ -58,7 +58,7 @@
                             <h:outputText value="#{item.cuisineId.name}" />
                             </div>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.userId.username}">
                             <div align="center">
                             <f:facet name="header">
                                 <h:outputText value="Cook User ID"/>
@@ -66,7 +66,7 @@
                             <h:outputText value="#{item.userId.username}" />
                             </div>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.cost}">
                             <div align="center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDishTitle_cost}"/>
@@ -74,7 +74,7 @@
                             <h:outputText value="#{item.cost}"/>
                             </div>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.reservationTime}">
                             <div align="center">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListDishTitle_reservationTime}"/>
@@ -89,7 +89,7 @@
                                 </h:outputText>
                             </div>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.mealTime}">
                             <div align="center">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListDishTitle_mealTime}"/>

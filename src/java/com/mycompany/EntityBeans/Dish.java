@@ -180,7 +180,7 @@ public class Dish implements Serializable {
         return (int)cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 

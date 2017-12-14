@@ -42,11 +42,17 @@
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
                         <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <c:if test="#{dishController.isGuest() == true}">
+                            <c:if test="#{dishController.isGuest() == true &amp;&amp; dishController.isNotSelf() == true}">
+                                <br />
                                 <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
+                                &nbsp;&nbsp;
+                                <p:commandButton value="Chat with #{dishController.selected.userId.username}" action="#{dishController.chatWith()}" />
                             </c:if>
-                            <c:if test="#{dishController.isGuest() == false &amp;&amp; dishController.hasEnoughCredits() == true}">
+                            <c:if test="#{dishController.isGuest() == false &amp;&amp; dishController.hasEnoughCredits() == true &amp;&amp; dishController.isNotSelf() == true}">
+                                <br />
                                 <p:commandButton  value="Pay and Reserve" actionListener="#{dishController.reserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl"/>
+                                &nbsp;&nbsp;
+                                <p:commandButton value="Chat with #{dishController.selected.userId.username}" action="#{dishController.chatWith()}" />
                             </c:if>
                         </c:if>
                     </h:panelGroup>

@@ -92,7 +92,7 @@ public class DishController implements Serializable {
     public void create() {
         selected.setUserId(accountManager.getSelected());
         if (selected.getMealTime().before(selected.getReservationTime())) {
-            JsfUtil.addErrorMessage("Please the meal time after the reservation time!");
+            JsfUtil.addErrorMessage("Please select the meal time after the reservation time!");
         } else {
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DishCreated"));
             if (!JsfUtil.isValidationFailed()) {
@@ -247,6 +247,16 @@ public class DishController implements Serializable {
             }
         }
 
+    }
+    
+    public boolean isNotSelf() {
+        if (selected != null && selected.getUserId() != null && accountManager != null && accountManager.getSelected() != null)
+            return selected.getUserId().getId() != accountManager.getSelected().getId();
+        return false;
+    }
+    
+    public String chatWith() {
+        return "/Chat.xhtml?faces-redirect=true";
     }
 
 }

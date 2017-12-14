@@ -588,3 +588,8 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
 .vertical-menu li {
     list-style-type: none;
 }
+
+.voting{
+    height: 100%;
+    float: left;
+}

@@ -38,7 +38,9 @@
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
-                            <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
+                        <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
+                        &nbsp;&nbsp;
+                        <p:commandButton value="Chat with #{dishController.selected.userId.username}" action="#{dishController.chatWith()}" />
                     </h:panelGroup>
                 </div>
             </h:form>

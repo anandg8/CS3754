@@ -10,7 +10,7 @@
     <ui:composition template="/template/siteTemplate.xhtml">
         
         <ui:define name="css">
-            <link rel="stylesheet" href="/CookToShare/resources/css/bootstrap.css" />
+            <!--<link rel="stylesheet" href="/CookToShare/resources/css/bootstrap.css" />-->
         </ui:define>
         <ui:define name="js">
             <h:outputScript library="js" name="bootstrap.js"/>
@@ -32,48 +32,23 @@
                     <p:rating value='#{dishController.selected.userId.userRating}' stars="5"/>
                 </div>
             <ui:repeat value="#{commentsController.getCommentsList()}" var="comment">
-                <p:remoteCommand name="upvote#{comment.id}" action="#{commentsController.upvote(comment.id)}" update=":growl"/>
-                <p:remoteCommand name="downvote#{comment.id}" action="#{commentsController.downvote(comment.id)}" update=":growl" />
-                <div class="well">
-                    <div class="row">
-                        <div class="col-lg-1">
-                                <p:commandButton class="btn btn-sm btn-success" type="button" onclick="upvote#{comment.id}()" value="Upvote" />                            
-                        </div>
-                        <br />
-                        <div class="col-lg-3">
-                            <h:outputText value="Username: #{comment.userId.username}" />
-                            <br />
-                            <br />
-                            <h:outputText value="Posted on: #{comment.datePosted}" />
-                            <br />
-                            <br />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                    </div>
-                        <div class="row">
-                            <div class="col-lg-1 text-center">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        #{commentsController.getScore(comment.id)}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-11">
-                                #{comment.comment}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-1">
-                                <p:commandButton class="btn btn-sm btn-danger" type="button" onclick="downvote#{comment.id}()" value="Downvote" />
-                            </div>
-                        </div>
-                    </div>
-                    <br />
+                <div style="background-color: white; padding: 30px; display: block; overflow: auto; margin-top: 20px; margin-bottom: 20px;">
+                <div class="voting" style="text-align: center;">
+                    <p:remoteCommand name="upvote#{comment.id}" action="#{commentsController.upvote(comment.id)}" update=":growl"/>
+                    <p:remoteCommand name="downvote#{comment.id}" action="#{commentsController.downvote(comment.id)}" update=":growl" />
+                    <p:commandButton class="btn btn-sm btn-success" type="button"  style="color: white; background-color: #2ecc71" onclick="upvote#{comment.id}()" value="Upvote" />
+                    <div style="font-size: 22px; margin-top: 15px; margin-bottom: 10px;">#{commentsController.getScore(comment.id)}</div>
+                    <p:commandButton class="btn btn-sm btn-danger" style="color: white; background-color: #e74c3c" type="button" onclick="downvote#{comment.id}()" value="Downvote" />
+                </div>
+                <div style=" height: 100%; margin-left: 200px; margin-top: 20px;">
+                    <div>Username: #{comment.userId.username}</div>
+                    <div>Date Posted: #{comment.datePosted}</div>
+                    <div stlye="margin-top:20px">#{comment.comment}</div>
+                </div>
+                </div>
             </ui:repeat>
-                <p:inputTextarea value="#{commentsController.comment}" class="form-control" placeholder="Type your reply here"/>
+                <p:inputTextarea value="#{commentsController.comment}" style="width: 90%" class="form-control" placeholder="Type your reply here"/>
+                <br />
                 <p:commandButton class="btn btn-lg btn-success" value="Submit Reply" action="#{commentsController.submitReply()}" update=":growl" />
             </h:form>
         </ui:define>
