@@ -7,6 +7,7 @@ import com.mycompany.FacadeBeans.DishFacade;
 import com.mycompany.managers.AccountManager;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -165,12 +166,38 @@ public class DishController implements Serializable {
         return (selected.getNumGuests() - getFacade().getCurrentNumReservations(selected.getId()));
     }
     
-    public double calculateDistance() {
-        //placeholder for now
-        int max = 10;
-        int min = 1;
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
+    public static double distance(
+            double lat1, double lng1, double lat2, double lng2) {
+        int r = 6371; // average radius of the earth in km
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+           Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) 
+          * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = r * c;
+        return d;
+    }
+    
+    double RoundTo2Decimals(double val) {
+            DecimalFormat df2 = new DecimalFormat("###.##");
+        return Double.valueOf(df2.format(val));
+    }
+    public double calculateDistance(String dishUserLocation, String accountUserLocation) {
+        String[] dLocation = dishUserLocation.split(",");
+        String[] aLocation = accountUserLocation.split(",");
+        // 0 Lat 1 Long
+        if (dLocation.length > 1 && aLocation.length > 1) {
+            double l1 = Double.parseDouble(dLocation[0]);
+            double result = distance(l1, 
+                    Double.parseDouble(dLocation[1]), 
+                    Double.parseDouble(aLocation[0]), 
+                    Double.parseDouble(aLocation[1]));
+            result *= 0.62137119224;
+            return RoundTo2Decimals(result);
+        }
+        else
+            return -1;
     }
     
     public boolean isGuest() {

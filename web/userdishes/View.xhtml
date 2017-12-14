@@ -33,7 +33,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                              <h:outputText value="#{dishController.getAvailability()}" />
                              
                              <h:outputText value="Distance:" />
-                             <h:outputText value="#{dishController.calculateDistance()}" />
+                             <h:outputText value="#{dishController.calculateDistance(dishController.selected.userId.location, accountManager.selected.location)}" />
                              
                              <h:outputText value="Reservation required by:" />
                              <h:outputText value="#{dishController.selected.reservationTime}" />

@@ -21,17 +21,17 @@
                 </div>
                 <div align="center">
                     <h:panelGroup id="display" rendered="#{dishController.selected != null}">
-                        <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
+                        <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px; height: 300px" />
                         <br />
 
                         <p:rating value='#{dishController.selected.userId.userRating}' stars="5" readonly="true" />
                          <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
                              <h:outputText value="Spots Available" />
                              <h:outputText value="#{dishController.getAvailability()}" />
-                             
-                             <h:outputText value="Distance:" />
-                             <h:outputText value="#{dishController.calculateDistance()}" />
-                             
+                            <c:if test="#{accountManager.isLoggedIn() == true}">
+                             <h:outputText value="Distance(mi):" />
+                             <h:outputText value="#{dishController.calculateDistance(dishController.selected.userId.location, accountManager.selected.location)}" />
+                             </c:if>
                              <h:outputText value="Reservation required by:" />
                              <h:outputText value="#{dishController.selected.reservationTime}" />
                              
