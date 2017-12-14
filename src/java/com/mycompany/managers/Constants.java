@@ -34,9 +34,9 @@ public final class Constants {
     Relative path is defined with respect to the Alternate Document Root starting with 'CloudStorage'.
      */
     //public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
-    public static final String PHOTOS_RELATIVE_PATH = "C:\\Users\\DongGyu\\UserPhotoStorage\\";
+    public static final String PHOTOS_RELATIVE_PATH = "resources/images/UserPhotoStorage/";
 //    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "UserPhotoStorage/defaultUserPhoto.png";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "C:\\Users\\DongGyu\\UserPhotoStorage\\defaultUserPhoto.png";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "resources/images/UserPhotoStorage/defaultUserPhoto.png";
 
 
     /* Temporary filename */
