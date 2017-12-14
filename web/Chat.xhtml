@@ -29,8 +29,6 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                     <h:form prependId="false">
                         <h:panelGrid columns="2">
                             UserName: <h:outputText value="#{accountManager.selected.username}" style="font-size: 150%;"/>
-                            <br />
-                            Sending To: <h:outputText value="#{dishController.selected.userId.username}" />
                             #{messageBean.message.setUser(accountManager.selected.username)}
                             Text: <p:inputText value="#{messageBean.message.message}"/>
                             <p:commandButton type="reset" value="Clear"/>
