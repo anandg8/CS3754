@@ -44,6 +44,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
+                        <p:commandButton value="Rate and Review" action="#{dishController.rateAndReview()}" ajax="false" onclick="PF('UserViewDialog').hide()" update=":growl" />
                     </h:panelGroup>
                 </div>
             </h:form>
