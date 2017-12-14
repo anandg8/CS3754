@@ -64,7 +64,7 @@ h1 {
 
 /* Style the text used under the standard HTML tag "h2" for header 2 */
 h2 {
-    font-size: 24pt;
+    font-size: 20pt;
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
@@ -530,11 +530,11 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
 .signInInputTextField{
     width: 400px;
     padding: 10px !important;
-    font-size: 24px !important;
+    font-size: 18px !important;
 }
 
 .signInLabel{
-    font-size: 24px;
+    font-size: 20px;
     text-align: left;
 }
 
