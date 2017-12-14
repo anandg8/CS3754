@@ -28,10 +28,10 @@
                          <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
                              <h:outputText value="Spots Available" />
                              <h:outputText value="#{dishController.getAvailability()}" />
-                             
+                            <c:if test="#{accountManager.isLoggedIn() == true}">
                              <h:outputText value="Distance(mi):" />
                              <h:outputText value="#{dishController.calculateDistance(dishController.selected.userId.location, accountManager.selected.location)}" />
-                             
+                             </c:if>
                              <h:outputText value="Reservation required by:" />
                              <h:outputText value="#{dishController.selected.reservationTime}" />
                              
