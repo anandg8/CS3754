@@ -587,7 +587,7 @@ public class AccountManager implements Serializable {
             }
 
             logout();
-            return "index.xhtml?faces-redirect=true";
+            return "index.html?faces-redirect=true";
         }
         return "";
     }
@@ -847,7 +847,7 @@ public class AccountManager implements Serializable {
 
     // Show the Home page
     public String showHomePage() {
-        return "index?faces-redirect=true";
+        return "index.html?faces-redirect=true";
     }
 
     // Show the Profile page
@@ -871,7 +871,7 @@ public class AccountManager implements Serializable {
         // Invalidate the logged-in User's session
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         // Redirect to show the index (Home) page
-        return "/index.xhtml?faces-redirect=true";
+        return "/index.html?faces-redirect=true";
     }
     public String userPhoto() {
 
