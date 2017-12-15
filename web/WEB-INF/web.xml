@@ -69,6 +69,6 @@ Copyright © 2017 Osman Balci. All rights reserved.
   
     <!-- Define which file to show when the application is launched. -->
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 </web-app>
