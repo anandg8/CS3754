@@ -93,28 +93,16 @@ public class MapManager implements Serializable {
             mapModel.addOverlay(new Marker(coord1, currentUser.getUsername()));
         }
         
-        
-//        Dish dish = dishes.get(0);
-//        User tempUser = dish.getUserId();
-//        String[] userLocationArray = tempUser.getLocation().split(",");
-//        if (userLocationArray.length > 0) {
-//            LatLng tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), Double.parseDouble(userLocationArray[1]));
-//            mapModel.addOverlay(new Marker(tempCoord, tempUser.getUsername(), dish.getDishName()));
-//        }
         for (int i = 0; i < dishes.size(); i++) {
             Dish dish = dishes.get(i);
             User tempUser = dish.getUserId();
             String[] userLocationArray = tempUser.getLocation().split(",");
             LatLng tempCoord;
             if (userLocationArray.length > 0) {
-                try {
-                    tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), Double.parseDouble(userLocationArray[1]));
-                } catch (Exception e) {
-                    //parsing error occured
-                    tempCoord = new LatLng(37.228265, -80.421215); //coordinates of blacksburg
-                }
-
-                mapModel.addOverlay(new Marker(tempCoord, tempUser.getUsername(), dish, "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
+                tempCoord = new LatLng(Double.parseDouble(userLocationArray[0]), 
+                        Double.parseDouble(userLocationArray[1]));
+                mapModel.addOverlay(new Marker(tempCoord, tempUser.getUsername(), dish, 
+                        "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
             }
             
         }

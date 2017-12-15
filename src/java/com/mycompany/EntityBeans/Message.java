@@ -8,13 +8,13 @@ import java.io.Serializable;
 import java.util.Date;
  
 /**
- * Message class
+ * Define a Message Object. Implement Serializable so that the message content is serialized when it's transmitted.
  * @author Anand
  */
 public class Message implements Serializable {
-    private Date dateSent;
-    private String user;
-    private String message;
+    private Date dateSent; // the time the message was sent.
+    private String user; // the username of the user sending the message.
+    private String message; // the content of the message.
  
     public Date getDateSent() {
         return dateSent;

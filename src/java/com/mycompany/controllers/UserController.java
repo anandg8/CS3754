@@ -23,6 +23,11 @@ import javax.faces.convert.FacesConverter;
 @SessionScoped
 public class UserController implements Serializable {
 
+    /*
+    The instance variable 'ejbFacade' is annotated with the @EJB annotation.
+    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
+    of the UserFacade object, after it is instantiated at runtime, into the instance variable 'ejbFacade'.
+     */
     @EJB
     private com.mycompany.FacadeBeans.UserFacade ejbFacade;
     private List<User> items = null;
@@ -114,7 +119,7 @@ public class UserController implements Serializable {
     }
 
     public List<User> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
+        return getFacade().findAll(); 
     }
 
     public List<User> getItemsAvailableSelectOne() {

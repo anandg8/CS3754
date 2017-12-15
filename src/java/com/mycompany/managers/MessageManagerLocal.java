@@ -11,6 +11,7 @@ import com.mycompany.EntityBeans.Message;
 /**
  *
  * @author Anand
+ * The Interface for the MessageManager.
  */
 @Local
 public interface MessageManagerLocal {

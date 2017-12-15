@@ -12,10 +12,19 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 /**
+ * Manager that hashes the password
  *
  * @author DongGyu
  */
 public class PasswordHashingManager {
+    /**
+     * Generates encrypted hash code give a password
+     *
+     * @param password password that is typed
+     * @return Encrypted password
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public static String generateStrongPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         int iterations = 1000;
@@ -28,6 +37,12 @@ public class PasswordHashingManager {
         return iterations + ":" + toHex(salt) + ":" + toHex(hash);
     }
 
+    /**
+     * Get bytes for additional encryption detail
+     *
+     * @return bytes of salt
+     * @throws NoSuchAlgorithmException
+     */
     private static byte[] getSalt() throws NoSuchAlgorithmException
     {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
@@ -36,6 +51,13 @@ public class PasswordHashingManager {
         return salt;
     }
 
+    /**
+     * String in Hex
+     *
+     * @param array Array of bytes that is passed in to get string in Hex
+     * @return String of Hex
+     * @throws NoSuchAlgorithmException
+     */
     private static String toHex(byte[] array) throws NoSuchAlgorithmException
     {
         BigInteger bi = new BigInteger(1, array);
@@ -49,6 +71,15 @@ public class PasswordHashingManager {
         }
     }
 
+    /**
+     * Validates if the typed password is valid or not
+     *
+     * @param originalPassword Typed password to be checked if it is valid
+     * @param storedPassword Stored encrypted password in the database
+     * @return true if the typed password (original password) is valid false otherwise.
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public static boolean validatePassword(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         String[] parts = storedPassword.split(":");
@@ -67,6 +98,14 @@ public class PasswordHashingManager {
         }
         return diff == 0;
     }
+
+    /**
+     * Gets hex string as input and returns bytes of the input
+     *
+     * @param hex String in hex
+     * @return bytes of the hex
+     * @throws NoSuchAlgorithmException 
+     */
     private static byte[] fromHex(String hex) throws NoSuchAlgorithmException
     {
         byte[] bytes = new byte[hex.length() / 2];
