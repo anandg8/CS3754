@@ -84,18 +84,37 @@ public class UserFacade extends AbstractFacade<User> {
         return credit;
     }
 
+    /**
+     * Create a credit account for the user. By default, each user is credited 100 credits
+     * @param id 
+     */
     public void createCreditAccount(Integer id) {
         em.createNativeQuery("INSERT INTO user_credits VALUES(DEFAULT, ?, 100)").setParameter(1, id).executeUpdate();
     }
 
+    /**
+     * Set the credits for a user
+     * @param credit to give
+     * @param userid to give to
+     */
     public void setCredits(int credit, int userid) {
         em.createNativeQuery("UPDATE user_credits SET credits_available = ? WHERE user_id = ?").setParameter(1, credit).setParameter(2, userid).executeUpdate();
     }
 
+    /**
+     * Credit the account with more credits
+     * @param userid to credit
+     * @param addition to add
+     */
     public void creditAccount(int userid, int addition) {
         setCredits(getCredits(userid) + addition, userid);
     }
 
+    /**
+     * Withdraw credit from account
+     * @param from the user id
+     * @param cost to withdraw from
+     */
     public void withdrawAccount(int from, int cost) {
         setCredits(getCredits(from) - cost, from);
     }

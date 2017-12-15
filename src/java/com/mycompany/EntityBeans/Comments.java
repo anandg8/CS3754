@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Amit Dayal on 2017.12.12  * 
+ * Copyright © 2017 Amit Dayal. All rights reserved. * 
  */
 package com.mycompany.EntityBeans;
 
@@ -73,7 +73,8 @@ public class Comments implements Serializable {
     @JoinColumn(name = "comment_table_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CommentsConjunction commentTableId;
-
+    
+    /* CONSTRUCTORS */
     public Comments() {
     }
 
@@ -90,61 +91,117 @@ public class Comments implements Serializable {
         this.comment = comment;
     }
 
+    /**
+     * Get the id of the comment
+     * @return id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Set the id of the comment
+     * @param id to set
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Get the reply id
+     * @return reply id
+     */
     public int getReplyId() {
         return replyId;
     }
 
+    /**
+     * Set the reply id
+     * @param replyId to set to
+     */
     public void setReplyId(int replyId) {
         this.replyId = replyId;
     }
 
+    /**
+     * Get the date posted
+     * @return string-formatted date of the date posted
+     */
     public String getDatePosted() {
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/YY");
         String s = df.format(datePosted);
         return s;
     }
 
+    /**
+     * Set the date posted
+     * @param datePosted set the date posted
+     */
     public void setDatePosted(Date datePosted) {
         this.datePosted = datePosted;
     }
 
+    /**
+     * Get if the comment is visible
+     * @return 1 true, 0 false
+     */
     public int getIsVisible() {
         return isVisible;
     }
 
+    /**
+     * Set the visibility. This essentially 'deletes' a comment
+     * @param isVisible 
+     */
     public void setIsVisible(int isVisible) {
         this.isVisible = isVisible;
     }
 
-
+    /**
+     * Get the comment itself
+     * @return a string for the comment
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     * Set the comment
+     * @param comment set the comment
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
+    /**
+     * Get the user who posted this comment
+     * @return User object
+     */
     public User getUserId() {
         return userId;
     }
 
+    /**
+     * Set the user of this comment
+     * @param userId of this comment
+     */
     public void setUserId(User userId) {
         this.userId = userId;
     }
 
+    /**
+     * Get the dish associated with this comment using the getcommentTable id
+     * This is a conjunction table
+     * @return CommentsConjunction object
+     */
     public CommentsConjunction getCommentTableId() {
         return commentTableId;
     }
 
+    /**
+     * Set the comment Table id
+     * @param commentTableId 
+     */
     public void setCommentTableId(CommentsConjunction commentTableId) {
         this.commentTableId = commentTableId;
     }

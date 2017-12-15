@@ -203,13 +203,4 @@ public class UserPhoto implements Serializable {
     public String getTemporaryFilePath() {
         return Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file";
     }
-
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
-
 }

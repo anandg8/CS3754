@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Amit Dayal on 2017.12.12  * 
+ * Copyright © 2017 Amit Dayal. All rights reserved. * 
  */
 package com.mycompany.EntityBeans;
 
@@ -104,6 +104,10 @@ public class Dish implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dishId")
     private Collection<Votes> votesCollection;
 
+    /**
+     * Manages the Dish Database
+     */
+    
     public Dish() {
     }
 
@@ -149,6 +153,10 @@ public class Dish implements Serializable {
         return dishPicturePath;
     }
 
+    /**
+     * If the path is not set, set it to the defaultFoodPhoto.png
+     * @param dishPicturePath 
+     */
     public void setDishPicturePath(String dishPicturePath) {
         if (dishPicturePath.length() == 0)
             this.dishPicturePath = "defaultFoodPhoto.png";

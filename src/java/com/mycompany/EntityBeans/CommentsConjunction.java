@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Amit Dayal on 2017.12.12  * 
+ * Copyright © 2017 Amit Dayal. All rights reserved. * 
  */
 package com.mycompany.EntityBeans;
 
@@ -54,6 +54,7 @@ public class CommentsConjunction implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "commentsId")
     private Dish dish;
 
+    /* CONSTRUCTORS */
     public CommentsConjunction() {
     }
 
@@ -66,10 +67,18 @@ public class CommentsConjunction implements Serializable {
         this.dateCreated = dateCreated;
     }
 
+    /**
+     * Get the id for the comments conjunction
+     * @return the id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Set the comments conjunction id
+     * @param id to set to
+     */
     public void setId(Integer id) {
         this.id = id;
     }
@@ -78,6 +87,10 @@ public class CommentsConjunction implements Serializable {
         return dateCreated;
     }
 
+    /**
+     * Set the date created of the comments
+     * @param dateCreated
+     */
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
@@ -87,18 +100,32 @@ public class CommentsConjunction implements Serializable {
         return commentsCollection;
     }
 
+    /**
+     * Set the comments collection
+     * @param commentsCollection to set to
+     */
     public void setCommentsCollection(Collection<Comments> commentsCollection) {
         this.commentsCollection = commentsCollection;
     }
 
+    /**
+     * Get the dish associated the comments conjunction
+     * @return 
+     */
     public Dish getDish() {
         return dish;
     }
 
+    /**
+     * Set the dish associated with this conjunction table
+     * @param dish 
+     */
     public void setDish(Dish dish) {
         this.dish = dish;
     }
 
+    /* AUTO-GENERATED FUNCTIONS */
+    
     @Override
     public int hashCode() {
         int hash = 0;
