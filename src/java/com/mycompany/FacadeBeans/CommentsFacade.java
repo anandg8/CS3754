@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Amit Dayal on 2017.12.12  * 
+ * Copyright © 2017 Amit Dayal. All rights reserved. * 
  */
 package com.mycompany.FacadeBeans;
 
@@ -31,7 +31,6 @@ public class CommentsFacade extends AbstractFacade<Comments> {
     }
     
     public List<Comments> getCommentsRecursively(int comments_conjunction_id) {
-        //System.out.println("comments conjunction id: " + comments_conjunction_id);
         Query q = getEntityManager().createNativeQuery("SELECT * FROM comments WHERE comment_table_id = ?", Comments.class);
         q.setParameter(1, comments_conjunction_id);
         List<Comments> parentComments = q.getResultList();
@@ -51,9 +50,6 @@ public class CommentsFacade extends AbstractFacade<Comments> {
 
     public boolean didUserVote(Integer userid, int commentID) {
         Long i = (Long) getEntityManager().createNativeQuery("SELECT COUNT(*) FROM votes WHERE user_id = ? AND comments_id = ?").setParameter(1, userid).setParameter(2, commentID).getSingleResult();
-        System.out.println("did user vote : " + i);
-        System.out.println("userid : " + userid);
-        System.out.println("comment id: " + commentID);
         return i.intValue() == 1;
     }
 
