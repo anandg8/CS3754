@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Amit Dayal on 2017.12.12  * 
+ * Copyright © 2017 Amit Dayal. All rights reserved. * 
  */
 package com.mycompany.EntityBeans;
 
@@ -55,6 +55,14 @@ public class CuisineType implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuisineId")
     private Collection<Dish> dishCollection;
 
+    /**
+     * This class is for selecting Cuisines. 
+     * Cuisines are pre-loaded in the database and will not be changed
+     * During run-time of this application
+     * 
+     */
+    
+    /* CONSTRUCTOR */
     public CuisineType() {
     }
 
@@ -68,26 +76,52 @@ public class CuisineType implements Serializable {
         this.description = description;
     }
 
+    /**
+     * Get the id for the cuisine type
+     * @return the cuisine id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Set the cuisine id
+     * @param id to set
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Get the name of Cuisine
+     * @return the name of the cuisine
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set the name of the cuisine
+     * @param name to set to
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get the description of the cuisine
+     * Not used
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Set the description of the cuisine
+     * Not used
+     * @param description 
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -97,10 +131,16 @@ public class CuisineType implements Serializable {
         return dishCollection;
     }
 
+    /**
+     * Set the dish collection
+     * @param dishCollection
+     */
     public void setDishCollection(Collection<Dish> dishCollection) {
         this.dishCollection = dishCollection;
     }
 
+    /* AUTO-GENERATED CODE */
+    
     @Override
     public int hashCode() {
         int hash = 0;

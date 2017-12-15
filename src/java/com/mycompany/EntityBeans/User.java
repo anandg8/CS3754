@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.11.21  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Amit Dayal on 2017.12.12  * 
+ * Copyright © 2017 Amit Dayal. All rights reserved. * 
  */
 package com.mycompany.EntityBeans;
 
@@ -157,6 +157,11 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Dish> dishCollection;
 
+    /**
+     * Controls the User database
+     * The user has many properties that can be pulled using the methods below 
+     */
+    
     public User() {
     }
 
