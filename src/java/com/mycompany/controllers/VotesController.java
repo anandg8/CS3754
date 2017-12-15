@@ -23,6 +23,11 @@ import javax.faces.convert.FacesConverter;
 @SessionScoped
 public class VotesController implements Serializable {
 
+    /*
+    The instance variable 'ejbFacade' is annotated with the @EJB annotation.
+    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
+    of the VotesFacade object, after it is instantiated at runtime, into the instance variable 'ejbFacade'.
+     */
     @EJB
     private com.mycompany.FacadeBeans.VotesFacade ejbFacade;
     private List<Votes> items = null;

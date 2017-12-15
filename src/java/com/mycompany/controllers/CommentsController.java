@@ -25,6 +25,11 @@ import javax.inject.Inject;
 @SessionScoped
 public class CommentsController implements Serializable {
 
+    /*
+    The instance variable 'ejbFacade' is annotated with the @EJB annotation.
+    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
+    of the CommentsFacade object, after it is instantiated at runtime, into the instance variable 'ejbFacade'.
+     */
     @EJB
     private com.mycompany.FacadeBeans.CommentsFacade ejbFacade;
     private List<Comments> items = null;
@@ -32,20 +37,20 @@ public class CommentsController implements Serializable {
     private String comment;
     
     @Inject
-    private DishController dishController;
+    private DishController dishController; // reference to the dishController.
     
     @Inject
-    private AccountManager accountManager;
+    private AccountManager accountManager; // reference to the accountManager.
 
     public CommentsController() {
     }
 
     public Comments getSelected() {
-        return selected;
+        return selected; // return the selected comment.
     }
 
     public void setSelected(Comments selected) {
-        this.selected = selected;
+        this.selected = selected; // set the selected comment as the selected comment.
     }
 
     protected void setEmbeddableKeys() {
@@ -55,34 +60,39 @@ public class CommentsController implements Serializable {
     }
 
     private CommentsFacade getFacade() {
-        return ejbFacade;
+        return ejbFacade; // return the facade instance variable.
     }
     
     public void setComment(String c){
-        this.comment = c;
+        this.comment = c; // set the content of the comment.
     }
     
     public String getComment() {
-        return this.comment;
+        return this.comment; // return the comment.
     }
     
     
     public String submitReply() {
-        System.out.println("reply is: " + this.comment);
+        System.out.println("Reply is: " + this.comment);
+        // update the forum based on the reply.
         if (this.comment != null && this.comment.trim().length() > 0) {
             getFacade().submitComment(accountManager.getSelected().getId(), dishController.getCommentsConjunctionID(), this.comment);
             this.comment = null;
+            // after updating, return to the forum board to see the new comment.
             return "RateForumBoard.xhtml?faces-redirect=true";
         } else {
+            // user did not fill out the comment field.
             JsfUtil.addErrorMessage("Comment was left blank");   
         }
         return "";
     }
     
     public String upvote(int id) {
+        // don't let the user upvote twice.
         if (getFacade().didUserVote(accountManager.getSelected().getId(), id)) {
             JsfUtil.addErrorMessage("You already voted for this comment!");
         } else {
+            // return to the forum board to see how the user voted.
             getFacade().userUpvote(accountManager.getSelected().getId(), id, dishController.getSelected().getId());
             return "RateForumBoard.xhtml?faces-redirect=true";
         }
@@ -90,9 +100,11 @@ public class CommentsController implements Serializable {
     }
     
     public String downvote(int id) {
+        // don't let the user downvote twice.
         if (getFacade().didUserVote(accountManager.getSelected().getId(), id)) {
             JsfUtil.addErrorMessage("You already voted for this comment!");
         } else {
+            // return to the forum board to see how the user voted.
             getFacade().userUpvote(accountManager.getSelected().getId(), id, dishController.getSelected().getId());
             return "RateForumBoard.xhtml?faces-redirect=true";
         }
@@ -100,11 +112,13 @@ public class CommentsController implements Serializable {
     }
     
     public List<Comments> getCommentsList() {
+        // return the list of all the comments on the forum.
         items = getFacade().getCommentsRecursively(dishController.getCommentsConjunctionID()); //get a list of all the comments for a certain dish
         return items;
     }
     
     public int getScore(int id) {
+        // get the vote count of a comment on the forum.
         return getFacade().getScore(id);
     }
 

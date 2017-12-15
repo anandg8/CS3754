@@ -18,7 +18,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
         
         <ui:define name="editableContent">
                 <script type="text/javascript">
-                    setInterval("nextMessage()", 1000); //update the chart every 1000 ms               
+                    setInterval("nextMessage()", 1000); // refresh the messages every 1 second.                
                     //poll the server for new messages
                     function updateMessages(xhr, status, args) {
                         if(!args.ok) return;

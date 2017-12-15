@@ -3,14 +3,14 @@
  * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. * 
  */
 package com.mycompany.managers;
+import com.mycompany.EntityBeans.Message;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Date;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import com.mycompany.EntityBeans.Message;
  
 /**
  * 
@@ -20,15 +20,22 @@ import com.mycompany.EntityBeans.Message;
 @Startup
 public class MessageManager implements MessageManagerLocal {
  
+    // create a linked-list to hold all the messages
     private final List<Message> messages =
             Collections.synchronizedList(new LinkedList());;
  
     @Override
+    /*
+    Add a message to the list.
+    */
     public void sendMessage(Message msg) {
-        messages.add(msg);
-        msg.setDateSent(new Date());
+        messages.add(msg); // add a message to the list.
+        msg.setDateSent(new Date()); // update the date of the message.
     }
- 
+
+    /*
+    Gets the first message after a certain date to display in the message box.
+    */
     @Override
     public Message getFirstAfter(Date after) {
         if(messages.isEmpty())
