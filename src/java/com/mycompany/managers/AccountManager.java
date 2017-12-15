@@ -430,15 +430,6 @@ public class AccountManager implements Serializable {
                 String securedPassword = PasswordHashingManager.generateStrongPasswordHash(password);
                 newUser.setPassword(securedPassword);
                 
-                /*
-                private int userPermission;
-                private Date dateCreated;
-                private int isActive;
-                private String profilePicture;
-                private String location;
-                private double userRating;
-                */
-                
                 Date currentDate = new Date();
                 
                 newUser.setUserPermission(1);
@@ -446,10 +437,9 @@ public class AccountManager implements Serializable {
                 newUser.setIsActive(1);
                 newUser.setProfilePicture("Temp Profile Pic");
                 String fullAddress = address + "+" + city + "+" + state + "+" + zipcode;
-                //System.out.println("address: " + fullAddress);
                 try {
-                    //System.out.println("attempting to geocode address");
-                    URL googleGeocodeAPI = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(fullAddress, "UTF-8"));
+                    URL googleGeocodeAPI = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" 
+                            + URLEncoder.encode(fullAddress, "UTF-8"));
                     URLConnection con = googleGeocodeAPI.openConnection();
                     BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                     String input;
@@ -459,7 +449,8 @@ public class AccountManager implements Serializable {
                     }
                     in.close();
                     JSONObject json = new JSONObject(jsonObj);
-                    JSONObject geo = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+                    JSONObject geo = json.getJSONArray("results").getJSONObject(0)
+                            .getJSONObject("geometry").getJSONObject("location");
                     double lat = (double)geo.get("lat");
                     double lng = (double)geo.get("lng");
                     newUser.setLocation(lat + "," + lng);
@@ -468,7 +459,6 @@ public class AccountManager implements Serializable {
                 }
                 
                 newUser.setUserRating(5);
-//                getUserFacade().createCreditAccount(newUser.getId());
                 getUserFacade().create(newUser);
                 
             } catch (EJBException e) {
