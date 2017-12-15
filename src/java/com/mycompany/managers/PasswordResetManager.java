@@ -1,8 +1,8 @@
 package com.mycompany.managers;
 
 /*
- * Created by Ananthavel Guruswamy on 2017.11.28  * 
- * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. * 
+ * Created by Ananthavel Guruswamy on 2017.11.28  *
+ * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. *
  */
 
 import com.mycompany.EntityBeans.User;
@@ -142,9 +142,9 @@ public class PasswordResetManager implements Serializable {
 
         // Obtain the object reference of the User object with username
         User user = getUserFacade().findByUsername(username);
-        
+
         return user.getSecurityQuestion();
-       
+
         // Obtain the number of the security question selected by the user
         //int questionNumber = user.getSecurityQuestion();
 
@@ -163,7 +163,7 @@ public class PasswordResetManager implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
 
         /*
-        UIComponent is the base class for all user interface components in JavaServer Faces. 
+        UIComponent is the base class for all user interface components in JavaServer Faces.
         The set of UIComponent instances associated with a particular request and response are organized into
         a component tree under a UIViewRoot that represents the entire content of the request or response.
          */
@@ -188,7 +188,7 @@ public class PasswordResetManager implements Serializable {
                 == null ? "" : uiInputConfirmPassword.getLocalValue().toString();
 
         if (entered_password.isEmpty() || entered_confirm_password.isEmpty()) {
-            // Do not take any action. 
+            // Do not take any action.
             // The required="true" in the XHTML file will catch this and produce an error message.
             return;
         }
@@ -200,37 +200,38 @@ public class PasswordResetManager implements Serializable {
         }
     }
 
+    //Checks if the user can reset the password, then reset to the new password
     public String resetPassword() {
 
         if (message == null || message.isEmpty()) {
 
             try {
-                
+
                 // Obtain the object reference of the User object with username
                 User user = getUserFacade().findByUsername(username);
-                
+
                 try {
                     // Reset User object's password
                     user.setPassword(password);
-                    
+
                     // Update the database
                     getUserFacade().edit(user);
-                    
+
                     // Initialize the instance variables
                     username = message = answer = password = "";
-                    
+
                 } catch (EJBException e) {
                     message = "Something went wrong while resetting your password, please try again!";
-                    
+
                     // Redirect to show the ResetPassword page
                     return "ResetPassword?faces-redirect=true";
                 }
-                
+
                 // Redirect to show the index (Home) page
                 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-                
+
                 ec.redirect("/CookToShare/index.html");
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(PasswordResetManager.class.getName()).log(Level.SEVERE, null, ex);
             }

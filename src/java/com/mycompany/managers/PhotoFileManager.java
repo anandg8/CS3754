@@ -1,6 +1,6 @@
 /*
- * Created by Ananthavel Guruswamy on 2017.12.11  * 
- * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. * 
+ * Created by Ananthavel Guruswamy on 2017.12.11  *
+ * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. *
  */
 package com.mycompany.managers;
 
@@ -33,7 +33,7 @@ import org.primefaces.model.UploadedFile;
  *
  * @author Anand
  */
-public class PhotoFileManager implements Serializable 
+public class PhotoFileManager implements Serializable
 {
 
     /*
@@ -55,7 +55,7 @@ public class PhotoFileManager implements Serializable
 
     /*
     The instance variable 'userPhotoFacade' is annotated with the @EJB annotation.
-    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference 
+    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
     of the UserPhotoFacade object, after it is instantiated at runtime, into the instance variable 'userPhotoFacade'.
      */
     @EJB
@@ -84,10 +84,12 @@ public class PhotoFileManager implements Serializable
         this.message = message;
     }
 
+    //Get the user facade
     public UserFacade getUserFacade() {
         return userFacade;
     }
 
+    //Get the user photo facade
     public UserPhotoFacade getUserPhotoFacade() {
         return userPhotoFacade;
     }
@@ -96,12 +98,12 @@ public class PhotoFileManager implements Serializable
     /*
     We display two types of error messages:
     (1) we store a message in an instance variable and pass it to a JSF page to display it.
-        <>  Under this approach, the displayed error message must be 
+        <>  Under this approach, the displayed error message must be
             cleared with the method below.
     (2) we use FacesMessage resultMsg;
-        <>  Under this approach, the error message is displayed with 
+        <>  Under this approach, the error message is displayed with
             <p:growl id="growl" life="5000" /> and fades away after 5 seconds.
-    
+
     ====================
     Clear Error Messages
     ====================
@@ -126,9 +128,9 @@ public class PhotoFileManager implements Serializable
 
         /*
         MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
-        the Internet according to their nature and format. 
+        the Internet according to their nature and format.
 
-        A "Content-type" is simply a header defined in many protocols, such as HTTP, that 
+        A "Content-type" is simply a header defined in many protocols, such as HTTP, that
         makes use of MIME types to specify the nature of the file currently being handled.
 
         Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
@@ -191,8 +193,8 @@ public class PhotoFileManager implements Serializable
     ================================
     Store Uploaded User's Photo File
     ================================
-    
-    Store the uploaded photo file and its thumbnail version and create a database record 
+
+    Store the uploaded photo file and its thumbnail version and create a database record
      */
     public FacesMessage storePhotoFile(UploadedFile file) {
         try {
@@ -301,7 +303,7 @@ public class PhotoFileManager implements Serializable
              */
             byte[] buffer = new byte[inputStream.available()];
 
-            // Read the bytes of data from the inputStream into the created memory buffer. 
+            // Read the bytes of data from the inputStream into the created memory buffer.
             inputStream.read(buffer);
 
             // Create a new empty file with the given name targetFilename in CloudStorage/PhotoStorage
@@ -319,7 +321,7 @@ public class PhotoFileManager implements Serializable
             // Create the targetFile in CloudStorage/PhotoStorage with the inputStream given
             outStream.write(buffer);
 
-            // Close the output stream and release any system resources associated with it. 
+            // Close the output stream and release any system resources associated with it.
             outStream.close();
 
         } catch (IOException e) {
@@ -358,7 +360,7 @@ public class PhotoFileManager implements Serializable
 
             The photo image scaling is properly done by using the imgscalr-lib-4.2.jar file.
 
-            The thumbnail file is named as "userId_thumbnail.fileExtension", 
+            The thumbnail file is named as "userId_thumbnail.fileExtension",
             e.g., 5_thumbnail.jpg for user with id 5.
              */
             // Scale the uploaded photo image to the THUMBNAIL_SIZE using imgscalr.
@@ -404,6 +406,7 @@ public class PhotoFileManager implements Serializable
             // Obtain the object reference of the first Photo object in the list
             UserPhoto photo = photoList.get(0);
 
+            //In try block in case of failure
             try {
                 // Delete the photo file from CloudStorage/PhotoStorage
                 Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));

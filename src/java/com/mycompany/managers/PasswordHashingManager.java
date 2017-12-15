@@ -1,6 +1,6 @@
 /*
- * Created by Dong Gyu Lee on 2017.12.13  * 
- * Copyright © 2017 Dong Gyu Lee. All rights reserved. * 
+ * Created by Dong Gyu Lee on 2017.12.13  *
+ * Copyright © 2017 Dong Gyu Lee. All rights reserved. *
  */
 package com.mycompany.managers;
 
@@ -21,7 +21,7 @@ public class PasswordHashingManager {
         int iterations = 1000;
         char[] chars = password.toCharArray();
         byte[] salt = getSalt();
-         
+
         PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hash = skf.generateSecret(spec).getEncoded();
@@ -35,7 +35,7 @@ public class PasswordHashingManager {
         sr.nextBytes(salt);
         return salt;
     }
-    
+
     private static String toHex(byte[] array) throws NoSuchAlgorithmException
     {
         BigInteger bi = new BigInteger(1, array);
@@ -48,18 +48,18 @@ public class PasswordHashingManager {
             return hex;
         }
     }
-    
+
     public static boolean validatePassword(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         String[] parts = storedPassword.split(":");
         int iterations = Integer.parseInt(parts[0]);
         byte[] salt = fromHex(parts[1]);
         byte[] hash = fromHex(parts[2]);
-         
+
         PBEKeySpec spec = new PBEKeySpec(originalPassword.toCharArray(), salt, iterations, hash.length * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] testHash = skf.generateSecret(spec).getEncoded();
-         
+
         int diff = hash.length ^ testHash.length;
         for(int i = 0; i < hash.length && i < testHash.length; i++)
         {

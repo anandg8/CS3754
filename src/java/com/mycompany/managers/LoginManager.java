@@ -1,8 +1,8 @@
 package com.mycompany.managers;
 
 /*
- * Created by Ananthavel Guruswamy on 2017.11.28  * 
- * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. * 
+ * Created by Ananthavel Guruswamy on 2017.11.28  *
+ * Copyright © 2017 Ananthavel Guruswamy. All rights reserved. *
  */
 
 import com.mycompany.EntityBeans.User;
@@ -104,23 +104,30 @@ public class LoginManager implements Serializable {
         User user;
         user = getUserFacade().findByUsername(getUsername());
 
+        //Checks if user exists
         if (user == null) {
             errorMessage = "Entered username " + getUsername() + " does not exist!";
             return "";
 
         } else {
+            ///Gets the current user
             String actualUsername = user.getUsername();
             String enteredUsername = getUsername();
 
+            //Gets the user's password
             String actualPassword = user.getPassword();
             boolean isPasswordMatched = false;
+
+            //Check if password worked
             try {
                 isPasswordMatched = PasswordHashingManager.validatePassword(getPassword(), actualPassword);
             }
             catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
                 isPasswordMatched = false;
             }
-            
+
+            //Return errors to the user
+
             if (!actualUsername.equals(enteredUsername)) {
                 errorMessage = "Invalid Username!";
                 return "";
