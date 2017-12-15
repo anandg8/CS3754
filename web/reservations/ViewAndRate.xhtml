@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Amit Dayal on 2017.12.11
+Copyright © 2017 Amit Dayal. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -8,7 +12,11 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-
+        <!--
+            This dialog box creates a view to allow the user to view and rate the a meal they have previously eaten. If the user 'rates'
+            the dish, they will be redirected to the 'RateForumBoard.xhtml' page where they can rate the dish, leave a comment and
+            upvote/downvote other users
+        -->
         <p:dialog id="DishViewDlgPastReservations" widgetVar="DishViewDialogPastReservations" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}" >
             <h:form id="DishViewFormPastReservations">
                 <br />
@@ -38,6 +46,7 @@
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
+                        <!-- This link will redirect you to the rate and review page -->
                         <p:commandButton value="Rate and Review" action="#{dishController.rateAndReview()}" ajax="false" onclick="PF('DishViewDialogPastReservations').hide()" update=":growl" />
                     </h:panelGroup>
                 </div>

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Amit Dayal on 2017.12.11
+Copyright © 2017 Amit Dayal. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -8,9 +12,12 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template/siteTemplate.xhtml">
-        
+        <!-- 
+            This page create the forum board. The forum board requires the following:
+                - A signed in user
+                - A selected dish from the previous List.xhtml page where the dish meal time has already elapsed        
+        -->
         <ui:define name="css">
-            <!--<link rel="stylesheet" href="/CookToShare/resources/css/bootstrap.css" />-->
         </ui:define>
         <ui:define name="js">
             <h:outputScript library="js" name="bootstrap.js"/>
@@ -26,14 +33,29 @@
             <p:growl id="growl" life="5000" />
             <h:form>
                 <div align="center">
+                    <!-- Show a picture of the dish -->
                     <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px" />
                     <br />
                     <br />
+                    <!-- 
+                        Show the rating of the cook who made this dish.
+                        This value can be changed so that the user can 'vote'
+                    -->
                     <p:rating value='#{dishController.selected.userId.userRating}' stars="5"/>
                 </div>
+                <!-- 
+                
+                    Get the list comments from the commentsController given the dish ID and the current user id
+                    Loop through the comments and display them in a descending fashion.
+                    Each comment has a username for the comment's original poster, date the user posted, the message
+                    the user posted and a upvote, downvote system. A user can vote at most 1 time for a comment. A user
+                    may post in the forum board as many times he/she wishes.
+                
+                -->
             <ui:repeat value="#{commentsController.getCommentsList()}" var="comment">
                 <div style="background-color: white; padding: 30px; display: block; overflow: auto; margin-top: 20px; margin-bottom: 20px;">
                 <div class="voting" style="text-align: center;">
+                    <!-- Remote command created for each comment in order to control upvote and downvote system -->
                     <p:remoteCommand name="upvote#{comment.id}" action="#{commentsController.upvote(comment.id)}" update=":growl"/>
                     <p:remoteCommand name="downvote#{comment.id}" action="#{commentsController.downvote(comment.id)}" update=":growl" />
                     <p:commandButton class="btn btn-sm btn-success" type="button"  style="color: white; background-color: #2ecc71" onclick="upvote#{comment.id}()" value="Upvote" />
@@ -47,6 +69,9 @@
                 </div>
                 </div>
             </ui:repeat>
+                <!--
+                    Here the user can enter in a comment. This is protected against XSS (Cross-site scripting attacks)
+                -->
                 <p:inputTextarea value="#{commentsController.comment}" style="width: 90%" class="form-control" placeholder="Type your reply here"/>
                 <br />
                 <p:commandButton class="btn btn-lg btn-success" value="Submit Reply" action="#{commentsController.submitReply()}" update=":growl" />

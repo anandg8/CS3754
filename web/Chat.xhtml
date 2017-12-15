@@ -19,7 +19,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
         <ui:define name="editableContent">
                 <script type="text/javascript">
                     setInterval("nextMessage()", 1000); //update the chart every 1000 ms               
-
+                    //poll the server for new messages
                     function updateMessages(xhr, status, args) {
                         if(!args.ok) return;
                         $('#chat').append('<div class="msg">[' +args.dateSent+ '] <strong>'+args.user+'</strong>: '+args.text+'</div>');
@@ -34,7 +34,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                             <p:commandButton type="reset" value="Clear"/>
                             <p:commandButton value="Send!" actionListener="#{messageBean.sendMessage}"/>
                         </h:panelGrid>
-
+                        <!-- Use the remote command to call the JavaScript function -->
                         <p:remoteCommand name="nextMessage" actionListener="#{messageBean.firstUnreadMessage}"
                                          oncomplete="updateMessages(xhr, status, args);"/>
                     </h:form>

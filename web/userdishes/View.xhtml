@@ -11,14 +11,11 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-
+        <!-- View a user dish -->
         <p:dialog id="DishViewDlg" widgetVar="DishViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}" >
             <h:form id="DishViewForm">
                 <br />
                 <div align="right">
-<!--                    <h:link outcome="/dish/Report" styleClass="arialTen">
-                                <i class="fa fa-exclamation-triangle">&nbsp;</i>
-                    </h:link>&nbsp;&nbsp;-->
                     <br />
                     <br />
                 </div>
@@ -44,6 +41,7 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
+                        <!-- Allow the user to access their own forum board. This encourages the user to review any past mistakes and improve on their next dish-->
                         <p:commandButton value="Rate and Review" action="#{dishController.rateAndReview()}" ajax="false" onclick="PF('UserViewDialog').hide()" update=":growl" />
                     </h:panelGroup>
                 </div>

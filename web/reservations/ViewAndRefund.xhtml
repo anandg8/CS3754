@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Amit Dayal on 2017.12.11
+Copyright © 2017 Amit Dayal. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -8,7 +12,10 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-
+        <!--
+            A user can refund a dish that is scheduled for the future. This view allows them to do that through their current-reservations view
+            The user can also chat with the host from this view
+        -->
         <p:dialog id="DishViewDlg" widgetVar="DishViewDialogRefund" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}" >
             <h:form id="DishViewForm">
                 <br />
@@ -38,8 +45,10 @@
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
+                        <!-- Refund the dish/Cancel Reservation -->
                         <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
                         &nbsp;&nbsp;
+                        <!-- Initiate chat -->
                         <p:commandButton value="Chat with #{dishController.selected.userId.username}" action="#{dishController.chatWith()}" />
                     </h:panelGroup>
                 </div>

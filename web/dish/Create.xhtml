@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Amit Dayal on 2017.12.11
+Copyright © 2017 Amit Dayal. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -7,29 +11,50 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
+        <!--- This file creates a dish from List.xhtml. A user must be signed in before they can view this window -->
         <p:dialog styleClass="custom-dialog" id="DishCreateDlg" widgetVar="DishCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDishTitle}">
             <h:form id="DishCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{dishController.selected != null}">
+                        
+                        <!-- The dish name is stored in the selected dish in the dishController with the field 'dishName' -->
                         <p:outputLabel value="Name" for="name" />
                         <p:inputText id="name" value="#{dishController.selected.dishName}" title="#{bundle.CreateDishTitle_name}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_name}"/>
                         
+                        <!-- The dish description is stored in the selected dish in the dishController with the field 'description' -->
                         <p:outputLabel value="#{bundle.CreateDishLabel_description}" for="description" />
                         <p:inputTextarea rows="4" cols="30" id="description" value="#{dishController.selected.description}" title="#{bundle.CreateDishTitle_description}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_description}"/>
                         
+                        <!-- 
+                            The dish reservation time is stored in the selected dish in the dishController with the field 'reservation time'
+                            A user cannot set a reservation time after a meal time. This is to prevent the user from setting invalid times as
+                            to not confuse other users
+                        -->
                         <p:outputLabel value="#{bundle.CreateDishLabel_reservationTime}" for="reservationTime" />
                         <p:calendar id="reservationTime" pattern="MM/dd/yyyy HH:mm" value="#{dishController.selected.reservationTime}" title="#{bundle.EditDishTitle_reservationTime}" required="true" requiredMessage="#{bundle.EditDishRequiredMessage_reservationTime}" showOn="button"/>
                         
+                        <!--
+                            The dish meal time is stored in the selected dish in the dishController with the field 'meal time'
+                            A user cannot set a meal time that is before the reservation time.
+                        -->
                         <p:outputLabel value="#{bundle.CreateDishLabel_mealTime}" for="mealTime" />
                         <p:calendar id="mealTime" pattern="MM/dd/yyyy HH:mm" value="#{dishController.selected.mealTime}" title="#{bundle.EditDishTitle_mealTime}" required="true" requiredMessage="#{bundle.EditDishRequiredMessage_mealTime}" showOn="button"/>
                         
+                        <!-- 
+                            The dish cost is stored in the selected dish in the dishController with the field 'cost'
+                            The cost is measured using an in-app currency rather than a real currency.
+                        -->
                         <p:outputLabel value="#{bundle.CreateDishLabel_cost}" for="cost" />
                         <p:inputText id="cost" value="#{dishController.selected.cost}" title="#{bundle.CreateDishTitle_cost}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_cost}"/>
                         
+                        <!-- 
+                            The dish name is stored in the selected dish in the dishController with the field 'numGuest'
+                            The number of guests can be limited so that the Cook can be more selective of the crowd
+                        -->
                         <p:outputLabel value="#{bundle.CreateDishLabel_numGuests}" for="numGuests" />
                         <p:inputText id="numGuests" value="#{dishController.selected.numGuests}" title="#{bundle.CreateDishTitle_numGuests}" required="true" requiredMessage="#{bundle.CreateDishRequiredMessage_numGuests}"/>
 
+                        <!-- The dish cuisine is stored in the selected dish in the dishController with the field 'cuisineId' -->
                         <p:outputLabel value="#{bundle.CreateDishLabel_cuisineId}" for="cuisineId" />
                         <p:selectOneMenu id="cuisineId" value="#{dishController.selected.cuisineId}" required="true" requiredMessage="#{bundle.EditDishRequiredMessage_cuisineId}">
                             <f:selectItems value="#{cuisineTableController.itemsAvailableSelectOne}"
@@ -37,6 +62,8 @@
                                            itemLabel ="#{cuisineIdItem.name}"
                                            itemValue="#{cuisineIdItem}"/>
                         </p:selectOneMenu>
+                        
+                        <!-- The dish picture is stored in the selected dish in the dishController with the field 'dishPicturePath' -->
 			<p:outputLabel value="Dish Image URL:" for="dishPicturePath" />
                         <p:inputText id="dishPicturePath" value="#{dishController.selected.dishPicturePath}"
                                      title="Dish Image URL"/>
@@ -44,6 +71,7 @@
 
                     </p:panelGrid>
                     <br/>
+                    <!-- After creating the dish, this dialog will close -->
                     <p:commandButton actionListener="#{dishController.create}" value="#{bundle.Save}" update="display,:DishListForm:datalist,:growl"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PF('DishCreateDialog').hide()" type="button"/>
                 </h:panelGroup>

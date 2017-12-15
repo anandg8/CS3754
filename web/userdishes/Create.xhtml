@@ -11,7 +11,9 @@ Copyright © 2017 Ananthavel Guruswamy. All rights reserved.
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
+        <!--
+            Create a new dish for a user from the user's account. This is the same view as the Create.xhtml from the dish/ folder
+        -->
         <p:dialog id="DishCreateDlg" widgetVar="DishCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDishTitle}">
             <h:form id="DishCreateForm">
                 <h:panelGroup id="display">

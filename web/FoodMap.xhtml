@@ -47,10 +47,6 @@ Copyright © 2017 Dong Gyu Lee. All rights reserved.
                     <p:outputPanel style="text-align: left; display: block; margin: auto">
                         
                         <h:outputText value="User: #{mapManager.marker.title}" />
-<!--                        <script>
-                        console.log("#{accountManager.selected.username}\n");
-                        console.log("#{mapManager.marker.data.userId.username == null}\n");
-                        </script>-->
                         <c:if test="#{mapManager.marker.data.userId.username != null}">                        
                             <br/>
                             <h:outputText value="Dish: #{mapManager.marker.data.dishName}" />

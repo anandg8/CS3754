@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Amit Dayal on 2017.12.11
+Copyright © 2017 Amit Dayal. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -8,14 +12,22 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-
+        <!--
+            This view allows the user to view a dish that is selected from the previous List.xhtml.
+            This view has different buttons that show up based on the situation of the user in respect to the dish selected.
+        
+            Possible cases:
+            ---------------
+                1) The user is not signed in -> Do not show button
+                2) The user is signed in but not the creator of the dish nor has reserved -> user can pay and reserve or chat with the host
+                3) The user is signed in and has already reserved but not the creator of the dish -> User can ask for a refund and chat with host
+                4) The user is signed in and is the creator of the dish -> The user cannot sign up for their own dish nor chat with themselves.
+                    This also breaks a loop where the user can credit him/herself with more money buy signing up for their own dish.
+        -->
         <p:dialog id="DishViewDlg" widgetVar="DishViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDishTitle}" >
             <h:form id="DishViewForm">
                 <br />
                 <div align="right">
-<!--                    <h:link outcome="/dish/Report" styleClass="arialTen">
-                                <i class="fa fa-exclamation-triangle">&nbsp;</i>
-                    </h:link>&nbsp;&nbsp;-->
                     <br />
                     <br />
                 </div>
@@ -23,25 +35,34 @@
                     <h:panelGroup id="display" rendered="#{dishController.selected != null}">
                         <h:graphicImage value="#{dishController.selected.dishPicturePath}" style="width:300px; height: 300px" />
                         <br />
-
+                        
+                        <!-- View the user rating (cook) of this dish-->
                         <p:rating value='#{dishController.selected.userId.userRating}' stars="5" readonly="true" />
                          <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
                              <h:outputText value="Spots Available" />
                              <h:outputText value="#{dishController.getAvailability()}" />
+                             <!-- only show distance if the user is logged in. We cannot calculate distances of users we don't have addresses of -->
                             <c:if test="#{accountManager.isLoggedIn() == true}">
                              <h:outputText value="Distance(mi):" />
                              <h:outputText value="#{dishController.calculateDistance(dishController.selected.userId.location, accountManager.selected.location)}" />
                              </c:if>
+                             
+                             <!-- Reservation time of the dish -->
                              <h:outputText value="Reservation required by:" />
                              <h:outputText value="#{dishController.selected.reservationTime}" />
                              
+                             <!-- Meal time of the selected dish -->
                              <h:outputText value="Meal Date and Time" />
                              <h:outputText value="#{dishController.selected.mealTime}" />
                              
+                             <!-- Cost of the dish -->
                              <h:outputText value="Cost:"/>
                              <h:outputText value="#{dishController.selected.cost}" />                   
                          </p:panelGrid>
+                        
+                        <!-- check if the user is even logged in  -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <!-- show 2 buttons if and only if the user is a guest of the current dish (has already paid to reserve, and is not the user himself -->
                             <c:if test="#{dishController.isGuest() == true &amp;&amp; dishController.isNotSelf() == true}">
                                 <br />
                                 <p:commandButton value="Refund and Unreserve" actionListener="#{dishController.unreserveDish()}" onclick="PF('DishViewDialog').hide()" update=":growl" />
